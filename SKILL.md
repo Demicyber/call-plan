@@ -4,7 +4,7 @@ description: >
   Generates Call Plan documents for AWS sales teams before external customer meetings.
   Uses a 7-section template shaped by the current sales stage and MEDDPICC priorities.
   Works with Engagement Plan, Post-Meeting Report, Executive Briefing, and CXO Personas skills
-  as part of the Customer Engagement Closed-Loop Flow.
+  as part of the Customer Engagement Planner.
   Triggers on: "call plan", "meeting prep", "customer visit", "visit preparation",
   "prep for my call", "help me prepare for tomorrow", "I have a meeting with",
   "拜访准备", "客户拜访".
