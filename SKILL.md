@@ -3,7 +3,7 @@ name: call-plan
 description: >
   Generates Call Plan documents for AWS sales teams before external customer meetings.
   Uses a 7-section template shaped by the current sales stage and MEDDPICC priorities.
-  Works with Engagement Plan, Post-Meeting Report, Executive Briefing, and CXO Personas skills
+  Works with Engagement Plan, Post-Meeting Report, Executive Briefing, Opportunity Progression, Contact Profile, CXO Personas, and Writer skills
   as part of the Customer Engagement Planner.
   Triggers on: "call plan", "meeting prep", "customer visit", "visit preparation",
   "prep for my call", "help me prepare for tomorrow", "I have a meeting with",
@@ -55,9 +55,21 @@ After generating, always ask: "Please review and let me know if anything needs t
 
 ---
 
-## 4. First Interaction Protocol
+## 4. Input
 
-When a sales rep requests a Call Plan, collect these **minimum required inputs**:
+Call Plan accepts input from two paths:
+
+### Path A: Auto-triggered from Engagement Plan (preferred)
+When EP's Next Milestone is confirmed, auto-pull:
+- **Objective, Customer Attendees, Target Outcome, AWS Team** from Next Milestone Detail
+- **Opportunity context** from EP Section 1 (Opportunity Snapshot + Win Strategy)
+- **Stakeholder stance and priorities** from EP Key Stakeholders
+- **Sales Stage** from EP or Opportunity Progression
+
+Agent enriches with CXO Personas (for exec attendees) and Contact Profile (for stance/history), then generates the Call Plan.
+
+### Path B: Direct request from sales rep
+When no EP exists or sales requests a Call Plan directly, collect these minimum required inputs:
 
 | # | Required Input | Why |
 |---|---|---|
@@ -70,6 +82,8 @@ Then:
 1. Confirm the **current sales stage** through interactive dialogue
 2. Infer what you can from context, research publicly available information
 3. Generate the Call Plan, marking remaining gaps as `[待确认]` / `[To be confirmed]`
+
+> After generating a Call Plan via Path B, always check if an EP exists. If not, auto-create one (Rule 1).
 
 ---
 
@@ -119,13 +133,14 @@ For every Call Plan, prepare **industry-relevant use cases** and **customer refe
 
 ## 8. Relationship with Other Skills
 
-| Skill | Relationship |
-|--------|-------------|
-| **Engagement Plan** | Call Plan pulls opportunity context from EP. After generating a Call Plan, check/create EP. EP's MEDDPICC Tracker gaps flow into Call Plan Section 4 questions. |
-| **Post-Meeting Report** | Call Plan's Success Criteria (Section 3) are auto-pulled into PMR's Outcome Assessment. |
-| **Executive Briefing** | If the meeting is an EBC or internal leadership briefing, generate an Executive Briefing instead — no Call Plan. |
-| **Contact Profile** | For each customer attendee, pull background and trust level from Contact Profile to inform questions, talking points, and agenda. |
-| **CXO Personas** | For executive attendees, load the matched persona profile. Apply to questions, objections, and agenda. |
+| Skill | Relationship | How to Access | If Unavailable |
+|--------|-------------|---------------|----------------|
+| **Engagement Plan** | Call Plan pulls opportunity context from EP's Next Milestone Detail. After generating via Path B, check/create EP. | Load `EP_{Customer}_{Opportunity}.md` from workspace. | Use sales rep's direct input (Path B). |
+| **CXO Personas** | For executive attendees, load matched persona. Apply to questions, objections, agenda. | Load persona file from `cxo-personas/personas/` using INDEX.md Title Mapping. | Use general executive priorities based on role. Mark as `[待确认]`. |
+| **Contact Profile** | For each attendee, pull background, stance, trust level. | Load contact profile if it exists in workspace. | Use sales rep's input. Mark unknown fields as `[待确认]`. |
+| **Post-Meeting Report** | Call Plan's Success Criteria (Section 3) are auto-pulled into PMR's Outcome Assessment. | N/A — PMR reads from the Call Plan file. | N/A. |
+| **Executive Briefing** | If meeting is an EBC or internal briefing, generate EB instead of Call Plan. | Check meeting type with sales rep. | N/A. |
+| **Opportunity Progression** | Sales stage and MEDDPICC gaps inform Call Plan sections 4, 5, 7. | Load opp record if it exists. | Confirm stage interactively with sales rep. |
 
 ---
 
@@ -173,7 +188,17 @@ Before delivering, validate:
 
 ## 12. Document Output
 
-All documents delivered as **Word (.docx) files**. On first use, ask the user where they want documents saved.
+All documents delivered as **Markdown (.md)** by default. Users can request other formats (Word .docx, PDF). On first use, ask the user where they want documents saved.
+
+### File Naming Convention
+
+`CP_{Customer}_{Date}.md`
+
+Example: `CP_MinghuaHeavy_2026-05-15.md`
+
+### Storage
+
+Save Call Plan files in the workspace or a location specified by the user.
 
 ---
 
