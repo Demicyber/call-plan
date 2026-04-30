@@ -41,9 +41,12 @@ After generating a Call Plan, check if an Engagement Plan exists for this custom
 ### Rule 2: Close the Loop
 At the **start of every conversation** about a customer, check for pending Post-Meeting Reports and overdue action items. Surface them immediately.
 
-### Rule 3: Persona-Driven (Executive-Only)
-- **C-suite / VP attendees** → load the matched CXO Persona profile and apply insights to questions, objections, and agenda
-- **Manager / IC attendees** → do NOT use personas; prepare based on role and context
+### Rule 3: People-Informed (Contact Profiling + CXO Personas)
+For **every attendee**, invoke **Contact Profiling** to obtain or build their behavioral profile (communication style, decision patterns, risk tolerance, what motivates/triggers them). Use this to tailor **how** we communicate — tone, pacing, conversation structure, and approach.
+
+For **executive attendees** (C-suite / VP), additionally load the matched **CXO Persona** to understand **what** this role cares about — priorities, pain points, KPIs, common objections. Apply these insights to shape discovery questions, objection handling, agenda, and talking points.
+
+Both layers work together: CXO Persona tells you what to talk about; Contact Profiling tells you how to talk about it.
 
 If attendee roles are unknown, ask the rep before proceeding.
 
@@ -52,6 +55,14 @@ Tag every Call Plan with the current AWS Sales Stage. Use the stage to determine
 
 ### Rule 5: Always Review with Sales
 After generating, always ask: "Please review and let me know if anything needs to be revised."
+
+### Rule 6: Sync Back to EP
+After generating a Call Plan, compare attendees and objectives with EP's Next Milestone Detail. If there are differences (new attendees, removed attendees, changed objectives), **sync changes back to the EP immediately**:
+1. **New attendees** → Add to EP Key Stakeholders with available info; mark unknown fields as `[待确认]` for sales to fill
+2. **Attendee changes** → Update EP Next Milestone Detail (Customer Attendees & Target Outcome)
+3. **Objective changes** → Update the corresponding row in EP Engagement Roadmap
+4. Add `[Updated: YYYY-MM-DD]` timestamp next to every changed field in the EP
+5. After syncing, notify sales: "EP has been updated to reflect the Call Plan changes — please review."
 
 ---
 
@@ -135,9 +146,9 @@ For every Call Plan, prepare **industry-relevant use cases** and **customer refe
 
 | Skill | Relationship | How to Access | If Unavailable |
 |--------|-------------|---------------|----------------|
-| **Engagement Plan** | Call Plan pulls opportunity context from EP's Next Milestone Detail. After generating via Path B, check/create EP. | Load `EP_{Customer}_{Opportunity}.md` from workspace. | Use sales rep's direct input (Path B). |
-| **CXO Personas** | For executive attendees, load matched persona. Apply to questions, objections, agenda. | Load persona file from `cxo-personas/personas/` using INDEX.md Title Mapping. | Use general executive priorities based on role. Mark as `[待确认]`. |
-| **Contact Profile** | For each attendee, pull background, stance, trust level. | Load contact profile if it exists in workspace. | Use sales rep's input. Mark unknown fields as `[待确认]`. |
+| **Engagement Plan** | Call Plan pulls opportunity context from EP's Next Milestone Detail. After generating via Path B, check/create EP. After generating, sync any attendee/objective changes back to EP (Rule 6). | Load `EP_{Customer}_{Opportunity}.md` from workspace. | Use sales rep's direct input (Path B). |
+| **CXO Personas** | For executive attendees, load matched persona to understand the **role's** priorities, pain points, KPIs, and common objections. Shapes discovery questions, objection handling, agenda, and talking points (the **what**). | Load persona file from `cxo-personas/personas/` using INDEX.md Title Mapping. | Use general executive priorities based on role. Mark as `[待确认]`. |
+| **Contact Profiling** | For **every** attendee, invoke Contact Profiling to obtain or build their behavioral profile — communication style, decision patterns, what motivates/triggers them. Shapes **how** we communicate in this meeting. | Load contact profiling file if it exists; otherwise initiate profiling through dialogue with sales. | Use sales rep's input. Mark unknown fields as `[待确认]`. |
 | **Post-Meeting Report** | Call Plan's Success Criteria (Section 3) are auto-pulled into PMR's Outcome Assessment. | N/A — PMR reads from the Call Plan file. | N/A. |
 | **Executive Briefing** | If meeting is an EBC or internal briefing, generate EB instead of Call Plan. | Check meeting type with sales rep. | N/A. |
 | **Opportunity Progression** | Sales stage and MEDDPICC gaps inform Call Plan sections 4, 5, 7. | Load opp record if it exists. | Confirm stage interactively with sales rep. |
@@ -202,4 +213,4 @@ Save Call Plan files in the workspace or a location specified by the user.
 
 ---
 
-*Call Plan Skill | Version: 1.0*
+*Call Plan Skill | Version: 1.1*
