@@ -124,7 +124,7 @@ Read [references/call-plan.md](references/call-plan.md) before generating. The t
 2. **Target Meeting Outcomes** — Dual-perspective (customer vs. ours) + stage progression target
 3. **Success Criteria** — Observable, assessable criteria for both sides
 4. **Information Exchange** — Questions to ask (MEDDPICC-driven) + information to deliver (industry use cases, references)
-5. **Potential Objections & Responses** — Based on CXO Persona profiles and competitive context
+5. **Potential Objections & Responses** — Based on CXO Persona profiles, Contact Profiling insights, and competitive context
 6. **Meeting Agenda** — Time-allocated, purpose-driven, aligned to outcomes
 7. **Potential Next Steps** — 2-3 concrete next steps to propose to the customer, aligned to stage exit criteria
 
