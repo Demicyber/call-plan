@@ -46,7 +46,11 @@ For **every attendee**, invoke **Contact Profiling** to obtain or build their be
 
 For **executive attendees** (C-suite / VP), additionally load the matched **CXO Persona** to understand **what** this role cares about — priorities, pain points, KPIs, common objections. Apply these insights to shape discovery questions, objection handling, agenda, and talking points.
 
-Both layers work together: CXO Persona tells you what to talk about; Contact Profiling tells you how to talk about it.
+**Context-aware reading:** Do not dump the entire CXO Persona — **select and emphasize the dimensions most relevant to this meeting's objective and the current opportunity**. Same persona, different opp = different focus. Depth varies by stage: early-stage meetings need top-level priorities; late-stage meetings may need deep-dive into specific objection patterns.
+
+**Web research enrichment:** Supplement CXO Persona and Contact Profiling with web research (company news, annual reports, LinkedIn, industry reports) to capture company-specific and person-specific context. If sales indicates a person doesn't fit the typical persona, proactively research their background. Cross-validate persona assumptions against real-world data.
+
+Both layers work together: CXO Persona tells you what to talk about; Contact Profiling tells you how to talk about it. Web research grounds both in reality.
 
 If attendee roles are unknown, ask the rep before proceeding.
 
