@@ -27,6 +27,18 @@
 | `{name}` | `{title}` | |
 | `{name}` | `{title}` | |
 
+### Attendee Insights
+
+> *💡 Condensed from EP Key Stakeholders (What They Care About + Profiling). For Path B (no EP), agent invokes Contact Profiling + CXO Personas directly to build these insights.*
+
+**{Name 1}** — {Title}
+- **Focus & Priorities:** `{Role-level priorities, pain points, KPIs}` *← from CXO Persona (exec only)*
+- **Communication Approach:** `{Communication style, decision patterns, what motivates/triggers them}` *← from Contact Profiling*
+- **Current Stance:** `{Supportive / Neutral / Cautious / Against}` *← from EP or sales input*
+- **Our Goal:** `{What we need from this person in this meeting}` *← from EP*
+
+*Repeat for each customer attendee.*
+
 ### AWS Attendees
 
 | Name | Title | Role in Meeting |
@@ -96,7 +108,7 @@
 
 ## 5. Potential Objections & Responses
 
-> *💡 Agent drafts based on CXO Persona profiles (for executive-level attendees), competitive context from EP, and current sales stage. Sales reviews and adds.*
+> *💡 Agent drafts based on CXO Persona profiles (for executive-level attendees), Contact Profiling insights (for all attendees), competitive context from EP, and current sales stage. Sales reviews and adds.*
 
 | # | Anticipated Objection | Our Response |
 |---|---|---|
@@ -135,4 +147,4 @@
 
 ---
 
-*Call Plan Template | Version: 1.0*
+*Call Plan Template | Version: 1.1*

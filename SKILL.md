@@ -3,7 +3,7 @@ name: call-plan
 description: >
   Generates Call Plan documents for AWS sales teams before external customer meetings.
   Uses a 7-section template shaped by the current sales stage and MEDDPICC priorities.
-  Works with Engagement Plan, Post-Meeting Report, Executive Briefing, Opportunity Progression, Contact Profile, CXO Personas, and Writer skills
+  Works with Engagement Plan, Post-Meeting Report, Executive Briefing, Opportunity Progression, Contact Profiling, CXO Personas, and Writer skills
   as part of the Customer Engagement Planner.
   Triggers on: "call plan", "meeting prep", "customer visit", "visit preparation",
   "prep for my call", "help me prepare for tomorrow", "I have a meeting with",
@@ -77,7 +77,7 @@ When EP's Next Milestone is confirmed, auto-pull:
 - **Stakeholder stance and priorities** from EP Key Stakeholders
 - **Sales Stage** from EP or Opportunity Progression
 
-Agent enriches with CXO Personas (for exec attendees) and Contact Profile (for stance/history), then generates the Call Plan.
+Agent enriches with CXO Personas (for exec attendees) and Contact Profiling (for behavioral insights), then generates the Call Plan.
 
 ### Path B: Direct request from sales rep
 When no EP exists or sales requests a Call Plan directly, collect these minimum required inputs:
@@ -175,8 +175,8 @@ Before delivering, validate:
 3. **Mark gaps with actionable context.** Use `[待确认]` / `[To be confirmed]` — explain **why** the information matters and **how** it would improve the document.
    - ❌ Weak: `[待确认] — 请补充竞争对手信息`
    - ✅ Better: `[待确认] — 目前缺少竞争对手信息。如果能提供当前在用的供应商和合同到期时间，我可以帮你做竞争分析和差异化策略，让异议处理部分更有针对性。`
-3. **Max 3 questions at once.** Prioritize top 3, note rest can be filled later.
-4. **Guide with examples.** Provide ❌/✅ contrast examples when sales input is too vague.
+4. **Max 3 questions at once.** Prioritize top 3, note rest can be filled later.
+5. **Guide with examples.** Provide ❌/✅ contrast examples when sales input is too vague.
 
 ---
 
