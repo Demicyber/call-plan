@@ -370,7 +370,7 @@ Gartner Buyer Enablement Data：提升成交概率的 #1 因素是帮助客户 d
 <!-- AGENT GUIDANCE:
 定位：提前准备异议处理 — 不是等客户提出再想，而是提前 rehearse。
 
-📥 数据源：Agent 基于 EP 上下文（当前商机的 Competitive Analysis、Stakeholder Risk、Contact Profiling、已有的 persona 分析）正常生成异议 → 销售补充已知的具体顾虑
+📥 数据源：Agent 基于 Call Plan 前序 section 的完整上下文（参会人、会议目标、要讨论的内容、已知信息）+ EP 相关分析正常生成异议 → 销售补充已知的具体顾虑
 
 ⚡ CXO Personas 校验（生成后 double check）：
 - 产出完成后，读取每位 attendee 对应的 CXO Persona Section 8 (Buying Dynamics)
