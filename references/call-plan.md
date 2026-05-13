@@ -507,6 +507,13 @@ Co-ownership 实践：
 📥 数据源：Agent 从 EP Roadmap + stage exit criteria + Target Outcomes 自动生成 → 销售确认
 （注意：会议实际约定的 next steps 由 PMR 记录，可能跟这里的预案不同。PMR 会对比 planned vs actual。）
 
+⚡ 与 Section 2 Target Meeting Outcomes 的对齐（关键！）：
+- Next Steps 必须是 Target Outcomes 达成后的自然延伸 — 不能跑偏到跟本次会议目标无关的动作
+- Primary path → 对应 Section 2 主目标达成的情况
+- Fallback path → 对应 Section 2 Fallback Outcome 的情况
+- Not a fit path → 对应 Section 3 Disqualification Signals 被触发的情况
+- Agent 生成后自检：每个 next step 能否直接追溯到 Section 2 的某个 outcome？如果不能 → 删除或重写
+
 ⚡ 与 Section 2 Fallback Outcome 的关系：
 - Section 2 Fallback Outcome = 目标层面的退而求其次（"如果主目标达不到，最低可接受的 advance 是什么"）
 - Section 7 Fallback Path = 动作层面的退而求其次（"基于 fallback outcome，具体提议什么动作"）
