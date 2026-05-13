@@ -4,6 +4,53 @@
 >
 > ✅ *After generating, agent always asks sales to review and revise as needed.*
 
+<!-- GLOBAL AGENT LOGIC:
+
+## 定位
+Call Plan 是 EP Next Milestone 的执行细化。一个 EP（一个商机）下面有多个 Call Plan（每次会议一个）。
+
+关系链：EP Next Milestone (方向/目标) → Call Plan (具体怎么聊) → PMR (会后复盘 → 回写 EP)
+
+- EP Next Milestone = 战略层："下一步做什么、跟谁、达成什么"
+- Call Plan = 执行层："具体怎么聊、问什么、怎么应对、时间怎么分"（比 EP 更 detail）
+- PMR = 反馈层："结果怎样、发现了什么、EP 怎么调整"
+
+## 数据源
+| 来源 | 说明 |
+|---|---|
+| EP 自动拉取 | Opportunity name, stage, attendees (from Key Stakeholders), target outcome (from Next Milestone), competitive context, stakeholder stance |
+| 销售补充 | 会议时间/地点、本次具体想聊什么、已知 objection、agenda 偏好、新发现的信息 |
+| Agent 生成 | 基于以上两者 + CXO Personas + Contact Profiling + meddpicc-stage-mapping 自动生成各 section 初稿 |
+
+## 生成流程
+1. 触发：销售请求生成 Call Plan，或 EP Next Milestone 到期提醒
+2. Agent 从 EP 拉取框架信息，向销售确认/补充本次会议特有的细节
+3. Agent 生成 Call Plan 全文初稿
+4. 销售 review → confirm 或修改
+5. Agent 检查修改项 → 触发双向同步（见下）
+
+## 双向同步规则（关键！）
+Call Plan 不是单向"EP 往下灌"。销售在 Call Plan 里修改的任何内容，agent 必须主动检查 EP 对应字段是否需要同步更新：
+
+| Call Plan 变更 | 检查 EP 哪里 |
+|---|---|
+| 修改了 attendee stance/info | → EP Key Stakeholders |
+| 加了新 objection | → EP Competitive Analysis / Stakeholder Risk |
+| 改了 target outcome | → EP Next Milestone Detail |
+| 改了 next steps | → EP Roadmap / Timeline |
+| 发现新 stakeholder | → EP Key Stakeholders（新增） |
+| 改了 success criteria | → EP Next Milestone exit criteria |
+
+Agent 行为：变更检测后，向销售提示 "EP 这几个地方也需要同步更新，确认吗？" — 销售确认后执行更新。绝对不能只改一个地方忘记另一个地方。
+
+## PMR 接口
+以下字段会被 PMR 拉取做会后对比评估：
+- Target Meeting Outcomes → PMR 对比实际 outcome
+- Success Criteria → PMR 逐项评估达成情况
+- Information to Gather → PMR 标注哪些搞清楚了、哪些还是 gap
+- Next Steps → PMR 对比实际约定的 next steps
+-->
+
 ---
 
 ## 1. Meeting Details
@@ -12,6 +59,13 @@
 数据来源：
 - Path A（从 EP 触发）：自动从 EP Next Milestone Detail 拉取大部分信息
 - Path B（销售直接请求）：向销售收集，确认后填入
+
+📥 数据源标注：
+- Opportunity Name / Current Stage → EP 自动拉取
+- Date / Time / Location / Duration / Format → 销售提供（可能 [待确认]）
+- Customer Attendees → EP Key Stakeholders 自动拉取，销售确认/补充
+- Attendee Insights → Agent 从 EP Key Stakeholders + CXO Personas + Contact Profiling 生成，销售确认
+- AWS Attendees → 销售提供
 
 Date/Time/Location 如果未确认 → 标注 [待确认]，不要编造
 Decision Role 如果第一次见面不清楚 → 标注 [待确认]，同时在 Section 4 加一个 discovery question 去搞清楚
@@ -69,6 +123,22 @@ Sponsor → Supporter → Neutral → Non-Supporter → Adversary
 
 ### AWS Attendees
 
+<!-- AGENT GUIDANCE (AWS Team):
+📥 数据源：销售提供，Agent 可从 EP AWS Team 字段建议
+
+角色分配逻辑：
+- Lead：主导会议节奏，做开场/收尾，管理时间。通常是 AM (Account Manager)
+- Support：辅助 Lead，负责记录关键信息，观察客户反应。通常是 co-sell partner 或 junior AM
+- SME (Subject Matter Expert)：回答技术深度问题，做 demo/architecture 讨论。通常是 SA (Solutions Architect)
+- Executive Sponsor：高管背书，只在关键会议出现（EB 对 EB）。通常是 Sales Director/VP
+
+分工原则：
+- 不要超过 3 人参加客户会议（除非客户方也多人）— 人多显得 pushy
+- 每个人必须有明确 purpose，不能"来听听"
+- 会前内部对齐：谁问什么问题、谁回答什么类型的问题、谁负责 close next step
+- Lead 负责最终 confirm next step — 不要多人同时试图 close
+-->
+
 | Name | Title | Role in Meeting |
 |---|---|---|
 | `{name}` | `{title}` | `{Lead / Support / SME / Executive Sponsor}` |
@@ -79,6 +149,9 @@ Sponsor → Supporter → Neutral → Non-Supporter → Adversary
 
 <!-- AGENT GUIDANCE:
 定位：这是整个 Call Plan 的"锚点" — 所有后续 section（成功标准、问题设计、议程安排）都围绕这个目标展开。
+
+📥 数据源：Agent 从 EP Next Milestone Detail 的 Target Outcome 自动生成初稿 → 销售确认/修改
+（注意：Call Plan 的 outcome 要比 EP 更具体 — EP 是方向，这里是本次会议的可验证动作）
 
 写法公式 — "Mutual Advance" Formula（出处：Force Management, Command of the Message）：
 "By the end of this meeting, [customer action] + [seller action] that moves toward [shared business objective]"
@@ -136,6 +209,8 @@ Challenger 视角（出处：Challenger Sale, CEB/Gartner）：
 
 <!-- AGENT GUIDANCE:
 定位：怎么判断会议是否成功？这些标准会直接被 PMR (Post-Meeting Report) 拉取做 Outcome Assessment。
+
+📥 数据源：Agent 基于 Target Outcomes + EP stage exit criteria (meddpicc-stage-mapping.md) 自动生成 → 销售确认
 
 写法公式 — "Evidence-Based Criteria"（出处：Force Management, Command of the Message）：
 "I will know this meeting succeeded when I [see/hear/receive] [specific observable evidence]"
@@ -198,6 +273,10 @@ Challenger 视角（出处：Challenger Sale, CEB/Gartner）：
 <!-- AGENT GUIDANCE:
 定位：会议中的"给与取" — 不只是提问题（gather），还要准备输出什么给客户（deliver）。
 
+📥 数据源：
+- Questions → Agent 基于 EP 当前 MEDDPICC gaps + stage exit criteria + Stakeholder Risk 自动生成，销售补充
+- Deliver items → Agent 从 EP Competitive Analysis + Solutions Search + 行业知识生成，销售确认
+
 核心原则（出处：Corporate Visions Research）：
 Buyers rate meetings as valuable when they LEARN something new, not when they're interrogated.
 比例建议：60% 给 insight / 40% 收集信息 — 不要变成审讯。
@@ -233,7 +312,7 @@ Hypothesis-Led Discovery（出处：Challenger Sale, CEB/Gartner）：
 - 展示专业度
 - 自然引导到你的差异化
 
-每个问题必须标注：Category（MEDDPICC element 或其他）+ Target Attendee（问谁）+ Purpose（为什么问 + 答案怎么用）
+每个问题必须标注：Target Attendee（问谁）+ Purpose（为什么问 + 答案怎么用）
 
 ### B. Information to DELIVER — "Give-to-Get" Strategy
 
@@ -270,11 +349,11 @@ Gartner Buyer Enablement Data：提升成交概率的 #1 因素是帮助客户 d
 
 ### Information to Gather
 
-| # | Question | Category | Target Attendee | Purpose |
-|---|---|---|---|---|
-| 1 | `{e.g., "贵司去年批准 SAP 迁移项目时，审批流程是怎样的？这次云基础设施的投资决策是否走类似通道？"}` | `{DP}` | `{CFO}` | `{搞清楚 paper process，确定还需要 engage 哪些人}` |
-| 2 | `{e.g., "您提到数据驻留合规是核心顾虑 — 如果我们能在本地 region 提供完整数据隔离，这是否解决安全团队的主要担忧？还是还有其他因素？"}` | `{DC}` | `{CISO}` | `{验证是否是真 blocker 还是可解决的顾虑}` |
-| 3 | `{e.g., "你们目前在评估哪些其他方案？评估标准里排在前三的是什么？"}` | `{CP}` | `{IT Director}` | `{了解竞争态势和 decision criteria}` |
+| # | Question | Target Attendee | Purpose |
+|---|---|---|---|
+| 1 | `{e.g., "贵司去年批准 SAP 迁移项目时，审批流程是怎样的？这次云基础设施的投资决策是否走类似通道？"}` | `{CFO}` | `{搞清楚 paper process，确定还需要 engage 哪些人}` |
+| 2 | `{e.g., "您提到数据驻留合规是核心顾虑 — 如果我们能在本地 region 提供完整数据隔离，这是否解决安全团队的主要担忧？还是还有其他因素？"}` | `{CISO}` | `{验证是否是真 blocker 还是可解决的顾虑}` |
+| 3 | `{e.g., "你们目前在评估哪些其他方案？评估标准里排在前三的是什么？"}` | `{IT Director}` | `{了解竞争态势和 decision criteria}` |
 
 ### Information to Deliver
 
@@ -290,6 +369,8 @@ Gartner Buyer Enablement Data：提升成交概率的 #1 因素是帮助客户 d
 
 <!-- AGENT GUIDANCE:
 定位：提前准备异议处理 — 不是等客户提出再想，而是提前 rehearse。
+
+📥 数据源：Agent 从 EP Competitive Analysis + CXO Personas + Contact Profiling + Stakeholder Risk 自动生成常见异议 → 销售补充已知的具体顾虑
 
 异议分类框架（综合 Sandler, Challenger, Corporate Visions）：
 
@@ -343,10 +424,10 @@ Status Quo Disruption — 最危险的异议是"不做"（出处：Corporate Vis
 
 > *💡 Agent drafts based on CXO Persona profiles, Contact Profiling insights, competitive context from EP, and current sales stage. Sales reviews and adds.*
 
-| # | Anticipated Objection | Category | Response | Fallback |
-|---|---|---|---|---|
-| 1 | `{e.g., "我们现在的多云架构运行得还可以，没有迫切需求改变。"}` | `{Status Quo}` | `{e.g., "完全理解 — 如果现在能 work 当然没必要为了变而变。不过我好奇，您提到的 Q4 降本20% 目标，在不调整架构的情况下有什么方案在考虑？（Pause）我们看到同等规模的零售企业在优化前，通常在多云管理层面有15-25%的隐性成本是 dashboard 上看不到的。如果我给您做一个快速 assessment 来验证这个数字，对您有帮助吗？"}` | `{如果客户坚持不需要：ask "什么条件下您会重新评估？" — 确认 trigger event，planted seed}` |
-| 2 | `{e.g., "Azure 给我们的 EA 价格非常有竞争力，你们怎么比？"}` | `{Price/Competition}` | `{e.g., "价格肯定是重要考量。不过我想先确认一件事 — 您比较的是单纯的单位价格，还是包含了运维人力和迁移风险的 total cost？（Pause）我问这个是因为我们某个零售客户当初也觉得 Azure EA 更便宜，后来算上 Graviton 实例的性能优势和管理开销缩减，实际 TCO 低了30%。如果我把这个对比模型分享给您参考，有价值吗？"}` | `{如果客户说已经做过 TCO 对比：ask 能否分享他们用的假设，我们提供第二视角帮他验证}` |
+| # | Anticipated Objection | Category | Response | Fallback | Disqualifier? |
+|---|---|---|---|---|---|
+| 1 | `{e.g., "我们现在的多云架构运行得还可以，没有迫切需求改变。"}` | `{Status Quo}` | `{e.g., "完全理解 — 如果现在能 work 当然没必要为了变而变。不过我好奇，您提到的 Q4 降本20% 目标，在不调整架构的情况下有什么方案在考虑？（Pause）我们看到同等规模的零售企业在优化前，通常在多云管理层面有15-25%的隐性成本是 dashboard 上看不到的。如果我给您做一个快速 assessment 来验证这个数字，对您有帮助吗？"}` | `{如果客户坚持不需要：ask "什么条件下您会重新评估？" — 确认 trigger event，planted seed}` | `{No — status quo inertia, not a hard blocker}` |
+| 2 | `{e.g., "Azure 给我们的 EA 价格非常有竞争力，你们怎么比？"}` | `{Price/Competition}` | `{e.g., "价格肯定是重要考量。不过我想先确认一件事 — 您比较的是单纯的单位价格，还是包含了运维人力和迁移风险的 total cost？（Pause）我问这个是因为我们某个零售客户当初也觉得 Azure EA 更便宜，后来算上 Graviton 实例的性能优势和管理开销缩减，实际 TCO 低了30%。如果我把这个对比模型分享给您参考，有价值吗？"}` | `{如果客户说已经做过 TCO 对比：ask 能否分享他们用的假设，我们提供第二视角帮他验证}` | `{No — unless contract already signed with competitor}` |
 
 ---
 
@@ -354,6 +435,8 @@ Status Quo Disruption — 最危险的异议是"不做"（出处：Corporate Vis
 
 <!-- AGENT GUIDANCE:
 定位：有目的性的时间分配 — 不是形式主义，而是确保会议节奏服务于 Target Outcomes。
+
+📥 数据源：Agent 根据 current stage + Target Outcomes + attendee 数量自动生成议程 → 销售调整
 
 时间分配原则（出处：RAIN Group "Connect, Convince, Collaborate" + Mike Weinberg）：
 
@@ -415,6 +498,14 @@ Co-ownership 实践：
 <!-- AGENT GUIDANCE:
 定位：会议结束时提议的具体下一步 — 对齐 Target Outcomes 和当前 stage exit criteria。
 
+📥 数据源：Agent 从 EP Roadmap + stage exit criteria + Target Outcomes 自动生成 → 销售确认
+（注意：会议实际约定的 next steps 由 PMR 记录，可能跟这里的预案不同。PMR 会对比 planned vs actual。）
+
+⚡ 与 Section 2 Fallback Outcome 的关系：
+- Section 2 Fallback Outcome = 目标层面的退而求其次（"如果主目标达不到，最低可接受的 advance 是什么"）
+- Section 7 Fallback Path = 动作层面的退而求其次（"基于 fallback outcome，具体提议什么动作"）
+- 两者必须一致：Section 7 的 fallback next steps 应该是 Section 2 Fallback Outcome 的具体执行方案
+
 写法标准 — SMART Next Step（出处：Jeb Blount, Fanatical Prospecting）：
 每个 next step 必须包含：
 - WHO：具体负责人
@@ -464,6 +555,13 @@ Jeb Blount 的 "Fallback Position"：
 |---|---|---|---|---|
 | 1 | `{e.g., "发送一份同行业迁移 reference case + 初步 assessment 报告，给客户消化时间"}` | `{Within 3 days}` | `{AWS}` | `{Provide value without pressure, keep door open}` |
 | 2 | `{e.g., "两周后安排一个30分钟 check-in，听听内部讨论后的反馈"}` | `{2 weeks}` | `{AM follow up}` | `{Maintain momentum without being pushy}` |
+
+**If not a fit / timing wrong (graceful exit):**
+
+| # | Proposed Next Step | Timeline | Owner | Purpose |
+|---|---|---|---|---|
+| 1 | `{e.g., "发送一份行业趋势报告作为 parting gift，不附带任何 ask"}` | `{Within 1 week}` | `{AM}` | `{Leave positive impression, preserve long-term relationship}` |
+| 2 | `{e.g., "约定6个月后 check-in（标注 trigger event：如果 X 发生请随时联系）"}` | `{6 months / trigger-based}` | `{AM}` | `{Plant seed for future, don't burn bridge}` |
 
 ---
 
