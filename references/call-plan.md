@@ -370,13 +370,13 @@ Gartner Buyer Enablement Data：提升成交概率的 #1 因素是帮助客户 d
 <!-- AGENT GUIDANCE:
 定位：提前准备异议处理 — 不是等客户提出再想，而是提前 rehearse。
 
-📥 数据源：Agent 从 EP Competitive Analysis + CXO Personas (Section 8: Buying Dynamics) + Contact Profiling + Stakeholder Risk 自动生成常见异议 → 销售补充已知的具体顾虑
+📥 数据源：Agent 基于 EP 上下文（当前商机的 Competitive Analysis、Stakeholder Risk、Contact Profiling、已有的 persona 分析）正常生成异议 → 销售补充已知的具体顾虑
 
-⚡ CXO Personas 校验规则：
-- 生成 objection 时，必须读取每位 attendee 对应的 CXO Persona Section 8 (Buying Dynamics)
-- 确保 Call Plan 的异议覆盖了该角色的核心 objection 类型（如 CEO 的 4 大 objections：Peer Proof / CFO-Board Narrative / Risk-Governance / Why Now Why You）
-- 用 CXO Persona 中的 "What they're really asking" 来校验 Response 是否回答了真正的关切
-- 用 CXO Persona 中的 archetype weighting 来判断 objection 优先级（如 Operator CEO 优先准备 #1 Peer Proof + #2 CFO Model）
+⚡ CXO Personas 校验（生成后 double check）：
+- 产出完成后，读取每位 attendee 对应的 CXO Persona Section 8 (Buying Dynamics)
+- 检查是否遗漏了该角色的核心 objection 类型（如 CEO 的 4 大 objections：Peer Proof / CFO-Board Narrative / Risk-Governance / Why Now Why You）
+- 如果有遗漏 → 补充；如果已覆盖 → 确认 Response 是否回答了 "What they're really asking"
+- 用 archetype weighting 校验优先级排序是否合理
 
 异议分类框架（综合 Sandler, Challenger, Corporate Visions）：
 
