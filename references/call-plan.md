@@ -83,7 +83,7 @@ Attendee Insights 写法标准：
 - 每个维度都要 actionable — 看完就知道"怎么办"
 - Focus 只挑跟本次会议目标相关的点，不是全面综述
 - Communication Approach 要具体到行为指导："先给数据再讲故事"而不是"analytical type"
-- Our Goal 必须是可验证的动作（跟 EP 的 Target Outcome 一致）
+- Our Goal 必须是可验证的动作（跟 Section 2 Target Meeting Outcomes 一致）
 - 如果某人是新面孔/信息不足 → 标注 [待确认]，Section 4 加 discovery question
 
 Current Stance 术语（统一用 Holden Power Base Selling 5级）：
@@ -434,7 +434,7 @@ Status Quo Disruption — 最危险的异议是"不做"（出处：Corporate Vis
 - ✅ 包含 fallback plan（如果初始 reframe 无效）
 -->
 
-> *💡 Agent drafts based on CXO Persona profiles, Contact Profiling insights, competitive context from EP, and current sales stage. Sales reviews and adds.*
+> *💡 Agent drafts based on Call Plan context (attendees, meeting objectives, discussion topics) and EP analysis. Then double-checks against CXO Persona Section 8 (Buying Dynamics) for completeness. Sales reviews and adds.*
 
 | # | Anticipated Objection | Category | Response | Fallback | Disqualifier? |
 |---|---|---|---|---|---|
@@ -586,4 +586,4 @@ Jeb Blount 的 "Fallback Position"：
 
 ---
 
-*Call Plan Template | Version: 2.0*
+*Call Plan Template | Version: 3.0*
