@@ -20,7 +20,7 @@ Call Plan 是 EP Next Milestone 的执行细化。一个 EP（一个商机）下
 |---|---|
 | EP 自动拉取 | Opportunity name, stage, attendees (from Key Stakeholders), target outcome (from Next Milestone), competitive context, stakeholder stance |
 | 销售补充 | 会议时间/地点、本次具体想聊什么、已知 objection、agenda 偏好、新发现的信息 |
-| Agent 生成 | 基于以上两者 + CXO Personas + Contact Profiling + meddpicc-stage-mapping 自动生成各 section 初稿 |
+| Agent 生成 | 基于以上两者 + CXO Personas + Contact Profiling + stage-mapping 自动生成各 section 初稿 |
 
 ## 生成流程
 1. 触发：销售请求生成 Call Plan，或 EP Next Milestone 到期提醒
@@ -36,7 +36,7 @@ Call Plan 不是单向"EP 往下灌"。销售在 Call Plan 里修改的任何内
 | Call Plan 变更 | 检查 EP 哪里 |
 |---|---|
 | 修改了 attendee stance/info | → EP Key Stakeholders |
-| 加了新 objection | → EP Competitive Analysis / Stakeholder Risk |
+| 加了新 objection | → EP Win Strategy / Stakeholder Risk |
 | 改了 target outcome | → EP Next Milestone Detail |
 | 改了 next steps | → EP Roadmap / Timeline |
 | 发现新 stakeholder | → EP Key Stakeholders（新增） |
@@ -184,7 +184,7 @@ Seller: "[我们] 将获得 [具体承诺/信息/access]，推进 [deal mileston
 - ✅ "客户验证我们的方案解决了他们 top 2 痛点，并识别出参与 business case review 的内部 stakeholders"
 
 Target Stage Progression：
-- 基于当前 stage 的 exit criteria（参考 meddpicc-stage-mapping.md）判断
+- 基于当前 stage 的 exit criteria（参考 stage-mapping.md）判断
 - 不是每次会议都能推进 stage — 如果距离 exit criteria 还远，可以写"保持当前 stage，推进以下关键 gap"
 - Agent 主动对照 exit criteria 建议：这次会议如果达到 outcome，是否满足推进条件？
 
@@ -210,7 +210,7 @@ Challenger 视角（出处：Challenger Sale, CEB/Gartner）：
 <!-- AGENT GUIDANCE:
 定位：怎么判断会议是否成功？这些标准会直接被 PMR (Post-Meeting Report) 拉取做 Outcome Assessment。
 
-📥 数据源：Agent 基于 Target Outcomes + EP stage exit criteria (meddpicc-stage-mapping.md) 自动生成 → 销售确认
+📥 数据源：Agent 基于 Target Outcomes + EP stage exit criteria (stage-mapping.md) 自动生成 → 销售确认
 
 ⚡ 对齐 Section 2：Success Criteria 是 Target Meeting Outcomes 的验证标准 — 每条 criteria 必须能直接追溯到 Section 2 的某个 outcome。如果一条 criteria 跟 Section 2 目标无关 → 删除。
 
@@ -276,8 +276,8 @@ Challenger 视角（出处：Challenger Sale, CEB/Gartner）：
 定位：会议中的"给与取" — 不只是提问题（gather），还要准备输出什么给客户（deliver）。
 
 📥 数据源：
-- Questions → Agent 基于 EP 当前 MEDDPICC gaps + stage exit criteria + Stakeholder Risk 自动生成，销售补充
-- Deliver items → Agent 从 EP Competitive Analysis + Solutions Search + 行业知识生成，销售确认
+- Questions → Agent 基于 EP 当前信息 gaps + stage exit criteria + Stakeholder Risk 自动生成，销售补充
+- Deliver items → Agent 从 EP Win Strategy + Solutions Search + 行业知识生成，销售确认
 
 ⚡ 对齐 Section 2：所有问题和分享内容都必须服务于 Target Meeting Outcomes — 问这个问题是为了推进哪个 outcome？分享这个信息是为了帮客户达成哪个目标？如果关联不上 → 删除或降优先级。
 
@@ -285,7 +285,7 @@ Challenger 视角（出处：Challenger Sale, CEB/Gartner）：
 Buyers rate meetings as valuable when they LEARN something new, not when they're interrogated.
 比例建议：60% 给 insight / 40% 收集信息 — 不要变成审讯。
 
-### A. Discovery Questions — 超越通用 MEDDPICC
+### A. Discovery Questions — 超越通用框架式提问
 
 SPIN Selling 语境层叠法（出处：Neil Rackham, SPIN Selling, 1988）：
 关键 insight：提问的顺序比单个问题重要。
@@ -349,7 +349,7 @@ Hypothesis-Led Discovery（出处：Challenger Sale, CEB/Gartner）：
 Gartner Buyer Enablement Data：提升成交概率的 #1 因素是帮助客户 do their buying job — 建立内部共识、justify 投资、降低感知风险。
 -->
 
-> *💡 Agent auto-selects MEDDPICC elements based on current sales stage. Questions and delivery items must be tailored to this specific meeting — not generic.*
+> *💡 Agent auto-selects discovery questions based on current sales stage and known information gaps. Questions and delivery items must be tailored to this specific meeting — not generic.*
 
 ### Information to Gather
 
