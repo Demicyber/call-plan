@@ -2,7 +2,7 @@
 name: call-plan
 description: >
   Generates Call Plan documents for AWS sales teams before external customer meetings.
-  Uses a 7-section template shaped by the current sales stage and MEDDPICC priorities.
+  Uses a 7-section template shaped by the current sales stage and info gaps.
   Works with Engagement Plan, Post-Meeting Report, Executive Briefing, Opportunity Progression, Contact Profiling, CXO Personas, and Writer skills
   as part of the Customer Engagement Planner.
   Triggers on: "call plan", "meeting prep", "customer visit", "visit preparation",
@@ -55,7 +55,7 @@ Both layers work together: CXO Persona tells you what to talk about; Contact Pro
 If attendee roles are unknown, ask the rep before proceeding.
 
 ### Rule 4: Stage-Aware
-Tag every Call Plan with the current AWS Sales Stage. Use the stage to determine MEDDPICC focus areas and target outcomes. Warn when activities don't match the stage. Suggest advancement when evidence supports it.
+Tag every Call Plan with the current AWS Sales Stage. Use the stage to determine focus areas and target outcomes. Warn when activities don't match the stage. Suggest advancement when evidence supports it.
 
 ### Rule 5: Always Review with Sales
 After generating, always ask: "Please review and let me know if anything needs to be revised."
@@ -106,13 +106,13 @@ Then:
 
 Six stages: **Prospect → Qualified → Technical Validation → Business Validation → Committed → Closed/Launched**
 
-Full stage definitions, advancement criteria, and MEDDPICC element mapping: [references/meddpicc-stage-mapping.md](references/meddpicc-stage-mapping.md)
+Full stage definitions, advancement criteria, and stage-specific guidance: [references/stage-mapping.md](references/stage-mapping.md)
 
 Use this mapping to:
-- Focus discovery questions on the MEDDPICC elements most critical for the current stage
+- Focus discovery questions on the info gaps most critical for the current stage
 - Align Target Outcomes with stage exit criteria
 - Identify gaps blocking stage progression
-- Suggest stage advancement when enough elements are confirmed
+- Suggest stage advancement when enough evidence is confirmed
 
 ---
 
@@ -123,7 +123,7 @@ Read [references/call-plan.md](references/call-plan.md) before generating. The t
 1. **Meeting Details** — Attendees, roles, logistics, opportunity context from EP
 2. **Target Meeting Outcomes** — Dual-perspective (customer vs. ours) + stage progression target
 3. **Success Criteria** — Observable, assessable criteria for both sides
-4. **Information Exchange** — Questions to ask (MEDDPICC-driven) + information to deliver (industry use cases, references)
+4. **Information Exchange** — Questions to ask (stage-driven, gap-focused) + information to deliver (industry use cases, references)
 5. **Potential Objections & Responses** — Based on CXO Persona profiles, Contact Profiling insights, and competitive context
 6. **Meeting Agenda** — Time-allocated, purpose-driven, aligned to outcomes
 7. **Potential Next Steps** — 2-3 concrete next steps to propose to the customer, aligned to stage exit criteria
@@ -134,13 +134,13 @@ Read [references/call-plan.md](references/call-plan.md) before generating. The t
 
 Instead of complex scenario selection, use the **current sales stage** to shape each section:
 
-| Stage | MEDDPICC Focus | Tone & Approach |
+| Stage | Focus Areas | Tone & Approach |
 |---|---|---|
-| **Prospect** | I, E, M, DP, Ch | Conversational. 70/30 rule (customer talks 70%). Earn a second meeting, not close anything. |
-| **Qualified** | I, M, Ch, DP, E, CP | Deep discovery. Fill MEDDPICC gaps aggressively. Listen more than present. |
-| **Technical Validation** | DC, DP, M, Ch | Prove technical fit with evidence. Co-define POC success criteria. |
-| **Business Validation** | E, PP, DP, M | Financial language. Quantify everything. Map full procurement process. |
-| **Committed / Closed** | M, DC, PP, E | Shift to customer success. Address concerns before discussing expansion. |
+| **Prospect** | Implicit pain, Economic impact, Champion identification | Conversational. 70/30 rule (customer talks 70%). Earn a second meeting, not close anything. |
+| **Qualified** | Pain validation, Metrics, Decision process, Champion engagement | Deep discovery. Fill info gaps aggressively. Listen more than present. |
+| **Technical Validation** | Decision criteria, Paper process, Technical fit proof | Prove technical fit with evidence. Co-define POC success criteria. |
+| **Business Validation** | Economic justification, Paper process, Decision timeline | Financial language. Quantify everything. Map full procurement process. |
+| **Committed / Closed** | Metrics delivery, Success validation, Expansion signals | Shift to customer success. Address concerns before discussing expansion. |
 
 For every Call Plan, prepare **industry-relevant use cases** and **customer references** matched to the customer's industry. If no exact match exists, use the closest adjacent industry and note the gap.
 
@@ -155,7 +155,7 @@ For every Call Plan, prepare **industry-relevant use cases** and **customer refe
 | **Contact Profiling** | For **every** attendee, invoke Contact Profiling to obtain or build their behavioral profile — communication style, decision patterns, what motivates/triggers them. Shapes **how** we communicate in this meeting. | Load contact profiling file if it exists; otherwise initiate profiling through dialogue with sales. | Use sales rep's input. Mark unknown fields as `[待确认]`. |
 | **Post-Meeting Report** | Call Plan's Success Criteria (Section 3) are auto-pulled into PMR's Outcome Assessment. | N/A — PMR reads from the Call Plan file. | N/A. |
 | **Executive Briefing** | If meeting is an EBC or internal briefing, generate EB instead of Call Plan. | Check meeting type with sales rep. | N/A. |
-| **Opportunity Progression** | Sales stage and MEDDPICC gaps inform Call Plan sections 4, 5, 7. | Load opp record if it exists. | Confirm stage interactively with sales rep. |
+| **Opportunity Progression** | Sales stage and info gaps inform Call Plan sections 4, 5, 7. | Load opp record if it exists. | Confirm stage interactively with sales rep. |
 
 ---
 
@@ -192,7 +192,7 @@ Before delivering, validate:
 
 ### Bilingual Support
 - Chinese input → Chinese output; English input → English output; mixed → match primary language
-- Section titles follow output language; table headers/field names stay in English; AWS product names and MEDDPICC always in English
+- Section titles follow output language; table headers/field names stay in English; AWS product names always in English
 
 ### Avoid
 - Filler phrases ("I'd be happy to help!", "Great question!")
@@ -217,4 +217,4 @@ Save Call Plan files in the workspace or a location specified by the user.
 
 ---
 
-*Call Plan Skill | Version: 1.1*
+*Call Plan Skill | Version: 3.0*
