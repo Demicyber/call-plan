@@ -25,9 +25,10 @@ Call Plan 是 EP Next Milestone 的执行细化。一个 EP（一个商机）下
 ## 生成流程
 1. 触发：销售请求生成 Call Plan，或 EP Next Milestone 到期提醒
 2. Agent 从 EP 拉取框架信息，向销售确认/补充本次会议特有的细节
-3. Agent 生成 Call Plan 全文初稿
-4. 销售 review → confirm 或修改
-5. Agent 检查修改项 → 触发双向同步（见下）
+3. Agent 检查上一份 PMR：unresolved gaps (Information Gap Check ❌) 自动带入 Section 4，未完成 action items 自动带入讨论
+4. Agent 生成 Call Plan 全文初稿
+5. 销售 review → confirm 或修改
+6. Agent 检查修改项 → 触发双向同步（见下）
 
 ## 双向同步规则（关键！）
 Call Plan 不是单向"EP 往下灌"。销售在 Call Plan 里修改的任何内容，agent 必须主动检查 EP 对应字段是否需要同步更新：
@@ -46,7 +47,6 @@ Agent 行为：变更检测后，向销售提示 "EP 这几个地方也需要同
 ## PMR 接口
 以下字段会被 PMR 拉取做会后对比评估：
 - Target Meeting Outcomes → PMR 对比实际 outcome
-- Success Criteria → PMR 逐项评估达成情况
 - Information to Gather → PMR 标注哪些搞清楚了、哪些还是 gap
 - Next Steps → PMR 对比实际约定的 next steps
 -->
