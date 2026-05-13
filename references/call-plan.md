@@ -212,6 +212,8 @@ Challenger 视角（出处：Challenger Sale, CEB/Gartner）：
 
 📥 数据源：Agent 基于 Target Outcomes + EP stage exit criteria (meddpicc-stage-mapping.md) 自动生成 → 销售确认
 
+⚡ 对齐 Section 2：Success Criteria 是 Target Meeting Outcomes 的验证标准 — 每条 criteria 必须能直接追溯到 Section 2 的某个 outcome。如果一条 criteria 跟 Section 2 目标无关 → 删除。
+
 写法公式 — "Evidence-Based Criteria"（出处：Force Management, Command of the Message）：
 "I will know this meeting succeeded when I [see/hear/receive] [specific observable evidence]"
 
@@ -276,6 +278,8 @@ Challenger 视角（出处：Challenger Sale, CEB/Gartner）：
 📥 数据源：
 - Questions → Agent 基于 EP 当前 MEDDPICC gaps + stage exit criteria + Stakeholder Risk 自动生成，销售补充
 - Deliver items → Agent 从 EP Competitive Analysis + Solutions Search + 行业知识生成，销售确认
+
+⚡ 对齐 Section 2：所有问题和分享内容都必须服务于 Target Meeting Outcomes — 问这个问题是为了推进哪个 outcome？分享这个信息是为了帮客户达成哪个目标？如果关联不上 → 删除或降优先级。
 
 核心原则（出处：Corporate Visions Research）：
 Buyers rate meetings as valuable when they LEARN something new, not when they're interrogated.
@@ -372,6 +376,8 @@ Gartner Buyer Enablement Data：提升成交概率的 #1 因素是帮助客户 d
 
 📥 数据源：Agent 基于 Call Plan 前序 section 的完整上下文（参会人、会议目标、要讨论的内容、已知信息）+ EP 相关分析正常生成异议 → 销售补充已知的具体顾虑
 
+⚡ 对齐 Section 2：只准备会阻碍 Target Meeting Outcomes 达成的异议 — 如果一个 objection 跟本次会议目标无关（可能是未来阶段的问题），不放在这里。
+
 ⚡ CXO Personas 校验（生成后 double check）：
 - 产出完成后，读取每位 attendee 对应的 CXO Persona Section 8 (Buying Dynamics)
 - 检查是否遗漏了该角色的核心 objection 类型（如 CEO 的 4 大 objections：Peer Proof / CFO-Board Narrative / Risk-Governance / Why Now Why You）
@@ -443,6 +449,8 @@ Status Quo Disruption — 最危险的异议是"不做"（出处：Corporate Vis
 定位：有目的性的时间分配 — 不是形式主义，而是确保会议节奏服务于 Target Outcomes。
 
 📥 数据源：Agent 根据 current stage + Target Outcomes + attendee 数量自动生成议程 → 销售调整
+
+⚡ 对齐 Section 2：议程的时间分配必须服务于 Target Meeting Outcomes — 最多时间分给直接推进 outcome 的环节。如果某个 agenda item 不能说清"它怎么帮我达成 Section 2 目标" → 砍掉或压缩。
 
 时间分配原则（出处：RAIN Group "Connect, Convince, Collaborate" + Mike Weinberg）：
 
