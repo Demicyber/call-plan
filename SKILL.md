@@ -203,13 +203,31 @@ Before delivering, validate:
 
 ## 12. Document Output
 
-All documents delivered as **Markdown (.md)** by default. Users can request other formats (Word .docx, PDF). On first use, ask the user where they want documents saved.
+### Default: HTML (Material Design 3)
+
+Every Call Plan is rendered as a styled HTML file using the Jinja2 template at `templates/call-plan.html.j2`. The agent:
+1. Generates structured data (JSON) from the Call Plan content
+2. Fills the template via `templates/render_cp.py`
+3. Outputs the rendered HTML file
+
+Visual style: Google Material Design 3 (Google Sans font, MD3 color tokens, 28px rounded cards, Material Symbols icons, responsive grid, pill badges for stance/category/tier).
+
+### On-Demand: PDF / Word
+
+- **PDF** — Generated from HTML via headless Chrome or weasyprint (preserves full styling)
+- **Word (.docx)** — Generated via python-docx (clean business format, not pixel-identical to HTML)
+
+Sales requests these explicitly; agent does not auto-generate.
 
 ### File Naming Convention
 
-`CP_{Customer}_{Date}.md`
+| Format | Naming |
+|--------|--------|
+| HTML | `CP_{Customer}_{Date}.html` |
+| PDF | `CP_{Customer}_{Date}.pdf` |
+| Word | `CP_{Customer}_{Date}.docx` |
 
-Example: `CP_MinghuaHeavy_2026-05-15.md`
+Example: `CP_MinghuaHeavy_2026-03-20.html`
 
 ### Storage
 
