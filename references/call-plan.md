@@ -600,4 +600,4 @@ Jeb Blount 的 "Fallback Position"：
 
 ---
 
-*Call Plan Template | Version: 3.0*
+*Call Plan Template | Version: 3.2*
