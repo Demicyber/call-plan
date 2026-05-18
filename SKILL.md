@@ -77,6 +77,9 @@ Every piece of information must carry a provenance label so sales knows the conf
 **显示规则：** 只显式标出 `[销售确认]` 和 `[网络搜索]`，无标注 = `[AI推断]`（默认）。
 **升级机制：** 销售确认后 → 升级为 `[销售确认]`。
 
+### Rule 8: Never Hallucinate
+Do not fabricate meeting objectives, attendee roles, customer stance, or expected outcomes. If information is unknown, mark as `[待确认]` and ask sales to provide it.
+
 ---
 
 ## 4. Input
