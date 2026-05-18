@@ -55,7 +55,7 @@ Both layers work together: CXO Persona tells you what to talk about; Contact Pro
 If attendee roles are unknown, ask the rep before proceeding.
 
 ### Rule 4: Stage-Aware
-Tag every Call Plan with the current AWS Sales Stage. Use the stage to determine focus areas and target outcomes. Warn when activities don't match the stage. Suggest advancement when evidence supports it.
+Tag every Call Plan with the current AWS Sales Stage (sourced from EP / Opp Progression). Use the stage to determine focus areas and target outcomes. Warn when activities don't match the stage. Suggest advancement when evidence supports it — but stage advancement decisions are validated by Opp Progression, not Call Plan.
 
 ### Rule 5: Always Review with Sales
 After generating, always ask: "Please review and let me know if anything needs to be revised."
@@ -119,13 +119,13 @@ Then:
 
 Six stages: **Prospect → Qualified → Technical Validation → Business Validation → Committed → Closed/Launched**
 
-Full stage definitions, advancement criteria, and stage-specific guidance: [references/stage-mapping.md](references/stage-mapping.md)
+Full stage definitions, advancement criteria, and stage-specific guidance: [references/meddpicc-stage-mapping.md](references/meddpicc-stage-mapping.md)
 
 Use this mapping to:
 - Focus discovery questions on the info gaps most critical for the current stage
 - Align Target Outcomes with stage exit criteria
 - Identify gaps blocking stage progression
-- Suggest stage advancement when enough evidence is confirmed
+- Suggest stage advancement when enough evidence is confirmed (final validation by Opp Progression skill, not Call Plan)
 
 ---
 
