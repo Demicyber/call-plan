@@ -111,7 +111,56 @@ Then:
 
 ---
 
-## 5. Stage-Aware Framework
+## 5. Generation Workflow — Pre-Generation Dialogue
+
+Call Plan generation is **NOT** a one-shot output. It follows a conversational preparation phase where agent and sales collaborate to confirm inputs, clarify unknowns, and answer each other's questions.
+
+**流程：**
+
+```
+EP Next Milestone confirmed / Sales requests CP
+    ↓
+Agent surfaces known context (from EP) + identifies gaps
+    ↓
+【Pre-Generation Dialogue 对话确认阶段】
+    ├── Agent 展示已知：参会人、目标、stage context
+    ├── Agent 提出待确认项：日期？最终参会人？上次遗留问题进展？
+    ├── Sales 可能反问 → Agent 作为信息提供者回应
+    │   （竞争情报、沟通风格建议、类似案例、行业趋势...）
+    ├── Sales 补充/修正 → Agent 实时调整理解
+    └── 关键输入确认后
+    ↓
+Agent 正式生成 Call Plan
+```
+
+**Agent 在对话中的双重角色：**
+
+| 角色 | 说明 | 示例 |
+|------|------|------|
+| **信息收集者** | 确认生成 CP 所需的关键输入 | "这次会议具体什么时候？客户方最终谁来？" |
+| **信息提供者** | 回应销售的问题，提供决策支持信息 | "根据 CXO Persona，这位 CTO 偏好数据驱动的讨论方式..." |
+
+**关键原则：**
+
+1. **不要死等所有信息才生成** — 如果关键信息（参会人、目标）已确认，其余 gaps 可以在 CP 中标 `[待确认]` 后先出初版
+2. **随时根据销售的问题调整** — 对话中发现新信息（比如竞争对手动态、客户内部变化），立即纳入 CP 的考量
+3. **Agent 的回答本身不是 CP** — 对话中提供的 research、建议、分析是帮助销售决策的，最终结构化输出才是 CP 文档
+4. **多轮对话是正常的** — 不要急于生成，确保关键共识达成
+
+**必确认项（Agent 不应假设的）：**
+- 会议日期/时间/形式（线上/线下）
+- 最终参会人名单（客户方 + AWS 方）
+- 本次会议的核心目标（sales 自己想要达成什么）
+
+**可推断项（Agent 可以先填、让 sales 确认的）：**
+- 会议目标的 customer perspective（基于 EP context）
+- 沟通策略（基于 Contact Profiling + CXO Persona）
+- 潜在异议（基于 stage + 竞争态势 + 历史）
+- 建议议程分配
+
+---
+
+## 6. Stage-Aware Framework
 
 Six stages: **Prospect → Qualified → Technical Validation → Business Validation → Committed → Closed/Launched**
 
@@ -137,7 +186,7 @@ For every Call Plan, prepare **industry-relevant use cases** and **customer refe
 
 ---
 
-## 6. Call Plan Template
+## 7. Call Plan Template
 
 Read [references/call-plan.md](references/call-plan.md) before generating. The template has 7 sections:
 
@@ -151,7 +200,7 @@ Read [references/call-plan.md](references/call-plan.md) before generating. The t
 
 ---
 
-## 7. Relationship with Other Skills
+## 8. Relationship with Other Skills
 
 | Skill | Relationship | How to Access | If Unavailable |
 |--------|-------------|---------------|----------------|
@@ -164,7 +213,7 @@ Read [references/call-plan.md](references/call-plan.md) before generating. The t
 
 ---
 
-## 8. Document Quality Standards
+## 9. Document Quality Standards
 
 Before delivering, validate:
 - [ ] All attendees identified with roles + relevant persona/profiling loaded
@@ -177,7 +226,7 @@ Before delivering, validate:
 
 ---
 
-## 9. Information Insufficient Fallback
+## 10. Information Insufficient Fallback
 
 1. **Never block.** Generate best-effort version with available information.
 2. **Never hallucinate.** Mark gaps as `[待确认]` with actionable context — explain **why** it matters and **how** it would improve the document.
@@ -188,7 +237,7 @@ Before delivering, validate:
 
 ---
 
-## 10. Language & Tone
+## 11. Language & Tone
 
 - **Professional but approachable** — not stiff, not casual
 - **Action-oriented** — active voice, lead with verbs
@@ -200,7 +249,7 @@ Before delivering, validate:
 
 ---
 
-## 11. Document Output
+## 12. Document Output
 
 ### Default: HTML (Material Design 3)
 
@@ -262,4 +311,4 @@ MilestoneBrief = EP Roadmap milestone 描述精简版（2-4个英文单词，keb
 
 ---
 
-*Call Plan Skill | Version: 3.1*
+*Call Plan Skill | Version: 3.2*
