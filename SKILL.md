@@ -28,7 +28,7 @@ The Call Plan prepares AWS sales team members before **external customer meeting
 
 **Position in the Closed-Loop Flow:**
 ```
-EP → Call Plan → Visit → PMR → Update EP → Next Call Plan → ...
+EP → Call Plan → Visit → PMR → Update EP (+ Opp Progression stage review) → Next Call Plan → ...
 ```
 
 ---
@@ -42,15 +42,11 @@ After generating a Call Plan, check if an Engagement Plan exists for this custom
 At the **start of every conversation** about a customer, check for pending Post-Meeting Reports and overdue action items. Surface them immediately.
 
 ### Rule 3: People-Informed (Contact Profiling + CXO Personas)
-For **every attendee**, invoke **Contact Profiling** to obtain or build their behavioral profile (communication style, decision patterns, risk tolerance, what motivates/triggers them). Use this to tailor **how** we communicate — tone, pacing, conversation structure, and approach.
+For **every attendee**, invoke **Contact Profiling** for behavioral profile (the **how** layer — communication style, decision patterns, what motivates/triggers them).
 
-For **executive attendees** (C-suite / VP), additionally load the matched **CXO Persona** to understand **what** this role cares about — priorities, pain points, KPIs, common objections. Apply these insights to shape discovery questions, objection handling, agenda, and talking points.
+For **executive attendees** (C-suite / VP), additionally load the matched **CXO Persona** for role-level priorities (the **what** layer — priorities, pain points, KPIs, common objections).
 
-**Context-aware reading:** Do not dump the entire CXO Persona — **select and emphasize the dimensions most relevant to this meeting's objective and the current opportunity**. Same persona, different opp = different focus. Depth varies by stage: early-stage meetings need top-level priorities; late-stage meetings may need deep-dive into specific objection patterns.
-
-**Web research enrichment:** Supplement CXO Persona and Contact Profiling with web research (company news, annual reports, LinkedIn, industry reports) to capture company-specific and person-specific context. If sales indicates a person doesn't fit the typical persona, proactively research their background. Cross-validate persona assumptions against real-world data.
-
-Both layers work together: CXO Persona tells you what to talk about; Contact Profiling tells you how to talk about it. Web research grounds both in reality.
+**Context-aware:** Select and emphasize dimensions most relevant to this meeting's objective and the current opportunity. Same persona, different opp = different focus. Supplement with web research (company news, LinkedIn, industry reports) to ground persona assumptions in reality.
 
 If attendee roles are unknown, ask the rep before proceeding.
 
@@ -61,15 +57,15 @@ Tag every Call Plan with the current AWS Sales Stage (sourced from EP / Opp Prog
 After generating, always ask: "Please review and let me know if anything needs to be revised."
 
 ### Rule 6: Sync Back to EP
-After generating a Call Plan, compare attendees and objectives with EP's Next Milestone Detail. If there are differences (new attendees, removed attendees, changed objectives), **sync changes back to the EP immediately**:
-1. **New attendees** → Add to EP Key Stakeholders with available info; mark unknown fields as `[待确认]` for sales to fill
-2. **Attendee changes** → Update EP Next Milestone Detail (Customer Attendees & Target Outcome)
+After generating a Call Plan, compare attendees and objectives with EP's Next Milestone Detail. If there are differences:
+1. **New attendees** → Add to EP Key Stakeholders; mark unknown fields as `[待确认]`
+2. **Attendee changes** → Update EP Next Milestone Detail
 3. **Objective changes** → Update the corresponding row in EP Engagement Roadmap
-4. Add `[Updated: YYYY-MM-DD]` timestamp next to every changed field in the EP
-5. After syncing, notify sales: "EP has been updated to reflect the Call Plan changes — please review."
+4. Add `[Updated: YYYY-MM-DD]` timestamp next to every changed field
+5. Notify sales: "EP has been updated to reflect the Call Plan changes — please review."
 
 ### Rule 7: Data Provenance Labeling
-Every piece of information in the Call Plan output must carry a provenance label so sales knows the confidence level.
+Every piece of information must carry a provenance label so sales knows the confidence level.
 
 | Label | Meaning | Sales Action |
 |-------|---------|--------------|
@@ -92,12 +88,12 @@ When EP's Next Milestone is confirmed, auto-pull:
 - **Objective, Customer Attendees, Target Outcome, AWS Team** from Next Milestone Detail
 - **Opportunity context** from EP Section 1 (Opportunity Snapshot + Win Strategy)
 - **Stakeholder stance and priorities** from EP Key Stakeholders
-- **Sales Stage** from EP or Opportunity Progression
+- **Sales Stage** from EP (originally sourced from Opp Progression)
 
-Agent enriches with CXO Personas (for exec attendees) and Contact Profiling (for behavioral insights), then generates the Call Plan.
+Agent enriches with CXO Personas + Contact Profiling + web research, then generates.
 
 ### Path B: Direct request from sales rep
-When no EP exists or sales requests a Call Plan directly, collect these minimum required inputs:
+When no EP exists or sales requests directly, collect minimum required inputs:
 
 | # | Required Input | Why |
 |---|---|---|
@@ -109,43 +105,19 @@ When no EP exists or sales requests a Call Plan directly, collect these minimum 
 Then:
 1. Confirm the **current sales stage** through interactive dialogue
 2. Infer what you can from context, research publicly available information
-3. Generate the Call Plan, marking remaining gaps as `[待确认]` / `[To be confirmed]`
+3. Generate the Call Plan, marking gaps as `[待确认]`
 
-> After generating a Call Plan via Path B, always check if an EP exists. If not, auto-create one (Rule 1).
+> After generating via Path B, always check if an EP exists. If not, auto-create one (Rule 1).
 
 ---
 
-## 5. AWS Sales Stages
+## 5. Stage-Aware Framework
 
 Six stages: **Prospect → Qualified → Technical Validation → Business Validation → Committed → Closed/Launched**
 
-Full stage definitions, advancement criteria, and stage-specific guidance: [references/meddpicc-stage-mapping.md](references/meddpicc-stage-mapping.md)
+Full stage definitions and exit criteria: [references/meddpicc-stage-mapping.md](references/meddpicc-stage-mapping.md)
 
-Use this mapping to:
-- Focus discovery questions on the info gaps most critical for the current stage
-- Align Target Outcomes with stage exit criteria
-- Identify gaps blocking stage progression
-- Suggest stage advancement when enough evidence is confirmed (final validation by Opp Progression skill, not Call Plan)
-
----
-
-## 6. Call Plan Template
-
-Read [references/call-plan.md](references/call-plan.md) before generating. The template has 7 sections:
-
-1. **Meeting Details** — Attendees, roles, logistics, opportunity context from EP
-2. **Target Meeting Outcomes** — Dual-perspective (customer vs. ours) + stage progression target
-3. **Success Criteria** — Observable, assessable criteria for both sides
-4. **Information Exchange** — Questions to ask (stage-driven, gap-focused) + information to deliver (industry use cases, references)
-5. **Potential Objections & Responses** — Based on CXO Persona profiles, Contact Profiling insights, and competitive context
-6. **Meeting Agenda** — Time-allocated, purpose-driven, aligned to outcomes
-7. **Potential Next Steps** — 2-3 concrete next steps to propose to the customer, aligned to stage exit criteria
-
----
-
-## 7. Stage-Driven Guidance
-
-Instead of complex scenario selection, use the **current sales stage** to shape each section:
+**How stage shapes each Call Plan:**
 
 | Stage | Focus Areas | Tone & Approach |
 |---|---|---|
@@ -155,66 +127,80 @@ Instead of complex scenario selection, use the **current sales stage** to shape 
 | **Business Validation** | Economic justification, Paper process, Decision timeline | Financial language. Quantify everything. Map full procurement process. |
 | **Committed / Closed** | Metrics delivery, Success validation, Expansion signals | Shift to customer success. Address concerns before discussing expansion. |
 
-For every Call Plan, prepare **industry-relevant use cases** and **customer references** matched to the customer's industry. If no exact match exists, use the closest adjacent industry and note the gap.
+**Use this mapping to:**
+- Focus discovery questions on info gaps most critical for the current stage
+- Align Target Outcomes with stage exit criteria
+- Identify gaps blocking stage progression
+- Suggest stage advancement when enough evidence is confirmed (final validation by Opp Progression, not Call Plan)
+
+For every Call Plan, prepare **industry-relevant use cases** and **customer references** matched to the customer's industry.
 
 ---
 
-## 8. Relationship with Other Skills
+## 6. Call Plan Template
+
+Read [references/call-plan.md](references/call-plan.md) before generating. The template has 7 sections:
+
+1. **Meeting Details** — Attendees, roles, logistics, opportunity context from EP
+2. **Target Meeting Outcomes** — Dual-perspective (customer vs. ours) + stage progression target
+3. **Success Criteria** — Observable, assessable criteria (auto-pulled into PMR Outcome Assessment)
+4. **Information Exchange** — Questions to ask (stage-driven, gap-focused) + information to deliver
+5. **Potential Objections & Responses** — Based on CXO Persona, Contact Profiling, and competitive context
+6. **Meeting Agenda** — Time-allocated, purpose-driven, aligned to outcomes
+7. **Potential Next Steps** — 2-3 concrete next steps, multi-path (if yes / if maybe / if not ready), aligned to stage exit criteria
+
+---
+
+## 7. Relationship with Other Skills
 
 | Skill | Relationship | How to Access | If Unavailable |
 |--------|-------------|---------------|----------------|
-| **Engagement Plan** | Call Plan pulls opportunity context from EP's Next Milestone Detail. After generating via Path B, check/create EP. After generating, sync any attendee/objective changes back to EP (Rule 6). | Load `EP_{Customer}_{Opportunity}.md` from workspace. | Use sales rep's direct input (Path B). |
-| **CXO Personas** | For executive attendees, load matched persona to understand the **role's** priorities, pain points, KPIs, and common objections. Shapes discovery questions, objection handling, agenda, and talking points (the **what**). | Load persona file from `cxo-personas/personas/` using INDEX.md Title Mapping. | Use general executive priorities based on role. Mark as `[待确认]`. |
-| **Contact Profiling** | For **every** attendee, invoke Contact Profiling to obtain or build their behavioral profile — communication style, decision patterns, what motivates/triggers them. Shapes **how** we communicate in this meeting. | Load contact profiling file if it exists; otherwise initiate profiling through dialogue with sales. | Use sales rep's input. Mark unknown fields as `[待确认]`. |
-| **Post-Meeting Report** | Call Plan's Success Criteria (Section 3) are auto-pulled into PMR's Outcome Assessment. | N/A — PMR reads from the Call Plan file. | N/A. |
-| **Executive Briefing** | If meeting is an EBC or internal briefing, generate EB instead of Call Plan. | Check meeting type with sales rep. | N/A. |
-| **Opportunity Progression** | Sales stage and info gaps inform Call Plan sections 4, 5, 7. | Load opp record if it exists. | Confirm stage interactively with sales rep. |
+| **Engagement Plan** | Primary context source. CP pulls from EP's Next Milestone Detail + Opp Snapshot + Stakeholder stance. After generating, sync any attendee/objective changes back to EP (Rule 6). | Load `EP_{Customer}_{Opportunity}.html` from workspace. | Use sales rep's direct input (Path B). |
+| **CXO Personas** | For exec attendees: role-level priorities, pain points, KPIs, objections (the **what** layer). Context-aware — select dimensions relevant to this meeting + stage. | Load from `cxo-personas/personas/` using INDEX.md Title Mapping. | General executive priorities based on role. Mark `[待确认]`. |
+| **Contact Profiling** | For every attendee: behavioral profile — communication style, decision patterns, motivators (the **how** layer). | Load if exists; otherwise build through dialogue with sales. | Use sales rep's input. Mark `[待确认]`. |
+| **Opportunity Progression** | Single source of truth for sales stage + exit criteria. Informs sections 2, 4, 5, 7. CP can suggest advancement but does NOT validate it. | Load opp record if it exists. | Confirm stage interactively with sales rep. |
+| **Post-Meeting Report** | CP's Success Criteria (Section 3) are auto-pulled into PMR's Outcome Assessment. CP's Next Steps are compared with actual outcomes in PMR. | N/A — PMR reads from CP. | N/A. |
+| **Executive Briefing** | If meeting is an EBC or internal executive briefing, generate EB instead of Call Plan. | Check meeting type with sales rep. | N/A. |
 
 ---
 
-## 9. Document Quality Standards
+## 8. Document Quality Standards
 
 Before delivering, validate:
-- Meeting details with attendee roles populated
-- Dual-perspective outcomes + stage progression target
-- Dual-perspective success criteria (observable, assessable)
-- Stage-appropriate questions + info to deliver
-- Objections and responses
-- Agenda with time allocation
-- Potential next steps aligned to stage exit criteria
+- [ ] All attendees identified with roles + relevant persona/profiling loaded
+- [ ] Dual-perspective outcomes aligned to stage exit criteria
+- [ ] Success criteria are observable and binary (not feeling-based)
+- [ ] Questions serve Target Outcomes (not generic discovery)
+- [ ] Objections sourced from persona + competitive context (not generic)
+- [ ] Agenda time allocation reflects outcome priority
+- [ ] Next steps are SMART (who, what, when, why, how) with multi-path options
 
 ---
 
-## 10. Information Insufficient Fallback
+## 9. Information Insufficient Fallback
 
 1. **Never block.** Generate best-effort version with available information.
-2. **Never hallucinate.** Do not fill fields with plausible-sounding but unverified content. Mark as `[待确认]` instead.
-3. **Mark gaps with actionable context.** Use `[待确认]` / `[To be confirmed]` — explain **why** the information matters and **how** it would improve the document.
-   - ❌ Weak: `[待确认] — 请补充竞争对手信息`
-   - ✅ Better: `[待确认] — 目前缺少竞争对手信息。如果能提供当前在用的供应商和合同到期时间，我可以帮你做竞争分析和差异化策略，让异议处理部分更有针对性。`
-4. **Max 3 questions at once.** Prioritize top 3, note rest can be filled later.
-5. **Guide with examples.** Provide ❌/✅ contrast examples when sales input is too vague.
+2. **Never hallucinate.** Mark gaps as `[待确认]` with actionable context — explain **why** it matters and **how** it would improve the document.
+   - ❌ `[待确认] — 请补充竞争对手信息`
+   - ✅ `[待确认] — 目前缺少竞争对手信息。如果能提供当前在用的供应商和合同到期时间，我可以做竞争分析和差异化策略。`
+3. **Max 3 questions at once.** Prioritize top 3, note rest can be filled later.
+4. **Guide with examples.** Provide ❌/✅ contrast when sales input is too vague.
 
 ---
 
-## 11. Language & Tone
+## 10. Language & Tone
 
 - **Professional but approachable** — not stiff, not casual
 - **Action-oriented** — active voice, lead with verbs
 - **Specific and quantified** — "Increase deployment frequency by 40%" not "Improve deployments"
 
-### Bilingual Support
-- Chinese input → Chinese output; English input → English output; mixed → match primary language
-- Section titles follow output language; table headers/field names stay in English; AWS product names always in English
+**Bilingual:** Chinese input → Chinese output; English → English; mixed → match primary language. Section titles follow output language; table headers and AWS product names always in English.
 
-### Avoid
-- Filler phrases ("I'd be happy to help!", "Great question!")
-- Vague recommendations ("Consider improving the relationship")
-- Generic templates with unfilled placeholders
+**Avoid:** Filler phrases, vague recommendations, generic templates with unfilled placeholders.
 
 ---
 
-## 12. Document Output
+## 11. Document Output
 
 ### Default: HTML (Material Design 3)
 
@@ -227,8 +213,8 @@ Visual style: Google Material Design 3 (Google Sans font, MD3 color tokens, 28px
 
 ### On-Demand: PDF / Word
 
-- **PDF** — Generated from HTML via headless Chrome or weasyprint (preserves full styling)
-- **Word (.docx)** — Generated via python-docx (clean business format, not pixel-identical to HTML)
+- **PDF** — Generated from HTML via headless Chrome or weasyprint
+- **Word (.docx)** — Generated via python-docx (clean business format)
 
 Sales requests these explicitly; agent does not auto-generate.
 
@@ -249,8 +235,6 @@ MilestoneBrief = EP Roadmap milestone 描述精简版（2-4个英文单词，keb
 **首次配置：** Agent 首次与销售互动时，询问本地存储路径：
 > "请告诉我你希望文件存放的本地路径（如 ~/Documents/AWS-Sales/）"
 
-销售确认后，Agent 记住该路径，后续所有文档自动写入/更新到该位置。
-
 **约束：文件存储在销售本地设备，不存放在 Feishu Doc 或其他云文档平台。**
 
 **目录结构（以 Customer → Opportunity 为核心）：**
@@ -260,7 +244,7 @@ MilestoneBrief = EP Roadmap milestone 描述精简版（2-4个英文单词，keb
 ├── {Customer}/
 │   ├── {Opportunity}/
 │   │   ├── EP_{Customer}_{Opportunity}.html
-│   │   ├── CP_{Customer}_{Date}_{MilestoneBrief}.html   ← Call Plan 在这里
+│   │   ├── CP_{Customer}_{Date}_{MilestoneBrief}.html   ← Call Plan
 │   │   ├── PMR_{Customer}_{Date}_{MilestoneBrief}.html
 │   │   └── ...
 │   └── _account/              ← 客户级共享资料（跨 Opp）
@@ -271,11 +255,11 @@ MilestoneBrief = EP Roadmap milestone 描述精简版（2-4个英文单词，keb
 **关键规则：**
 - Call Plan 存放在对应 Opportunity 文件夹下（跟 EP 同级）
 - 每次会议产生一个新 CP 文件（不是 living document）
-- Agent 通过 EP → Roadmap → Next Milestone 定位当前 Opp，在同目录下生成 CP
+- Agent 通过 EP → Roadmap → Next Milestone 定位当前 Opp
 - 多 Opp 定位：1个 active opp → 自动关联；多个 → 问销售确认
 
-详细目录结构规范见 engagement-plan SKILL.md（作为主定义文档）。
+详细目录结构规范见 engagement-plan SKILL.md（主定义文档）。
 
 ---
 
-*Call Plan Skill | Version: 3.0*
+*Call Plan Skill | Version: 3.1*
