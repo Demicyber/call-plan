@@ -68,6 +68,19 @@ After generating a Call Plan, compare attendees and objectives with EP's Next Mi
 4. Add `[Updated: YYYY-MM-DD]` timestamp next to every changed field in the EP
 5. After syncing, notify sales: "EP has been updated to reflect the Call Plan changes — please review."
 
+### Rule 7: Data Provenance Labeling
+Every piece of information in the Call Plan output must carry a provenance label so sales knows the confidence level.
+
+| Label | Meaning | Sales Action |
+|-------|---------|--------------|
+| `[销售确认]` | 销售直接提供或明确确认的信息 | 可直接使用 |
+| `[AI推断]` | Agent 根据上下文分析推断的信息 | 建议核实 |
+| `[网络搜索]` | 通过网络搜索获取的公开信息 | 注意时效 |
+
+**标注粒度：** 每条独立可判断真伪的断言。
+**显示规则：** 只显式标出 `[销售确认]` 和 `[网络搜索]`，无标注 = `[AI推断]`（默认）。
+**升级机制：** 销售确认后 → 升级为 `[销售确认]`。
+
 ---
 
 ## 4. Input
