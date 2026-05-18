@@ -195,7 +195,7 @@ Read [references/call-plan.md](references/call-plan.md) before generating. The t
 
 1. **Meeting Details** — Attendees, roles, logistics, opportunity context from EP
 2. **Target Meeting Outcomes** — Dual-perspective (customer vs. ours) + stage progression target
-3. **Success Criteria** — Observable, assessable criteria (auto-pulled into PMR Outcome Assessment)
+3. **Success Criteria** — Observable, assessable criteria (verification standard for Section 2 outcomes)
 4. **Information Exchange** — Questions to ask (stage-driven, gap-focused) + information to deliver
 5. **Potential Objections & Responses** — Based on CXO Persona, Contact Profiling, and competitive context
 6. **Meeting Agenda** — Time-allocated, purpose-driven, aligned to outcomes
@@ -211,7 +211,7 @@ Read [references/call-plan.md](references/call-plan.md) before generating. The t
 | **CXO Personas** | For exec attendees: role-level priorities, pain points, KPIs, objections (the **what** layer). Context-aware — select dimensions relevant to this meeting + stage. | Load from `cxo-personas/personas/` using INDEX.md Title Mapping. | General executive priorities based on role. Mark `[待确认]`. |
 | **Contact Profiling** | For every attendee: behavioral profile — communication style, decision patterns, motivators (the **how** layer). | Load if exists; otherwise build through dialogue with sales. | Use sales rep's input. Mark `[待确认]`. |
 | **Opportunity Progression** | Single source of truth for sales stage + exit criteria. Informs sections 2, 4, 5, 7. CP can suggest advancement but does NOT validate it. | Load opp record if it exists. | Confirm stage interactively with sales rep. |
-| **Post-Meeting Report** | CP's Success Criteria (Section 3) are auto-pulled into PMR's Outcome Assessment. CP's Next Steps are compared with actual outcomes in PMR. | N/A — PMR reads from CP. | N/A. |
+| **Post-Meeting Report** | CP's Target Meeting Outcomes (Section 2) are auto-pulled into PMR's Outcome Assessment. CP's Next Steps are compared with actual outcomes in PMR. | N/A — PMR reads from CP. | N/A. |
 | **Executive Briefing** | If meeting is an EBC or internal executive briefing, generate EB instead of Call Plan. | Check meeting type with sales rep. | N/A. |
 
 ---

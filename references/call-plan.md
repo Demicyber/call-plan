@@ -222,7 +222,7 @@ Challenger 视角（出处：Challenger Sale, CEB/Gartner）：
 ## 3. Success Criteria
 
 <!-- AGENT GUIDANCE:
-定位：怎么判断会议是否成功？这些标准会直接被 PMR (Post-Meeting Report) 拉取做 Outcome Assessment。
+定位：怎么判断会议是否成功？这些标准是 Section 2 Target Meeting Outcomes 的验证工具，帮助销售在会中实时判断目标是否达成。
 
 📥 数据源：Agent 基于 Target Outcomes + EP stage exit criteria (stage-mapping.md) 自动生成 → 销售确认
 
@@ -272,7 +272,7 @@ Challenger 视角（出处：Challenger Sale, CEB/Gartner）：
 - ✅ "客户分享了内部评估标准文档（或口头描述了3个以上评估维度）"
 -->
 
-> *💡 Agent drafts dual-perspective criteria. These will be auto-pulled into PMR Outcome Assessment after the meeting. Criteria must be observable and assessable.*
+> *💡 Agent drafts dual-perspective criteria. These are verification standards for Section 2 outcomes — they help sales assess in real-time whether objectives are being met. Criteria must be observable and assessable.*
 
 | Level | Customer Would Consider Successful If… | We Would Consider Successful If… |
 |---|---|---|
