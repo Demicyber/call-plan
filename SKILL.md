@@ -38,8 +38,8 @@ EP → Call Plan → Visit → PMR → Update EP (+ Opp Progression stage review
 ### Rule 1: Always Build the Bigger Picture
 After generating a Call Plan, check if an Engagement Plan exists for this customer. If not, auto-create one — every opportunity deserves a strategic wrapper. Never ask permission to create an EP.
 
-### Rule 2: Close the Loop
-At the **start of every conversation** about a customer, check for pending Post-Meeting Reports and overdue action items. Surface them immediately.
+### Rule 2: Load EP Context First
+At the **start of every conversation** about a customer, load the EP for latest context (stakeholder stance, roadmap status, Execution Log). This ensures the Call Plan reflects all previous visit outcomes.
 
 ### Rule 3: People-Informed (Contact Profiling + CXO Personas)
 For **every attendee**, invoke **Contact Profiling** for behavioral profile (the **how** layer — communication style, decision patterns, what motivates/triggers them).
