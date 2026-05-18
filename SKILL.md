@@ -236,15 +236,45 @@ Sales requests these explicitly; agent does not auto-generate.
 
 | Format | Naming |
 |--------|--------|
-| HTML | `CP_{Customer}_{Date}.html` |
-| PDF | `CP_{Customer}_{Date}.pdf` |
-| Word | `CP_{Customer}_{Date}.docx` |
+| HTML | `CP_{Customer}_{Date}_{MilestoneBrief}.html` |
+| PDF | `CP_{Customer}_{Date}_{MilestoneBrief}.pdf` |
+| Word | `CP_{Customer}_{Date}_{MilestoneBrief}.docx` |
 
-Example: `CP_MinghuaHeavy_2026-03-20.html`
+Example: `CP_MinghuaHeavy_2026-05-15_Discovery-CTO.html`
 
-### Storage
+MilestoneBrief = EP Roadmap milestone 描述精简版（2-4个英文单词，kebab-case）。CP 和对应 PMR 使用相同的 `{Date}_{MilestoneBrief}` 后缀，方便配对。
 
-Save Call Plan files in the workspace or a location specified by the user.
+### Storage Architecture
+
+**首次配置：** Agent 首次与销售互动时，询问本地存储路径：
+> "请告诉我你希望文件存放的本地路径（如 ~/Documents/AWS-Sales/）"
+
+销售确认后，Agent 记住该路径，后续所有文档自动写入/更新到该位置。
+
+**约束：文件存储在销售本地设备，不存放在 Feishu Doc 或其他云文档平台。**
+
+**目录结构（以 Customer → Opportunity 为核心）：**
+
+```
+{sales_local_path}/
+├── {Customer}/
+│   ├── {Opportunity}/
+│   │   ├── EP_{Customer}_{Opportunity}.html
+│   │   ├── CP_{Customer}_{Date}_{MilestoneBrief}.html   ← Call Plan 在这里
+│   │   ├── PMR_{Customer}_{Date}_{MilestoneBrief}.html
+│   │   └── ...
+│   └── _account/              ← 客户级共享资料（跨 Opp）
+│       ├── org-chart.md
+│       └── contacts/
+```
+
+**关键规则：**
+- Call Plan 存放在对应 Opportunity 文件夹下（跟 EP 同级）
+- 每次会议产生一个新 CP 文件（不是 living document）
+- Agent 通过 EP → Roadmap → Next Milestone 定位当前 Opp，在同目录下生成 CP
+- 多 Opp 定位：1个 active opp → 自动关联；多个 → 问销售确认
+
+详细目录结构规范见 engagement-plan SKILL.md（作为主定义文档）。
 
 ---
 
