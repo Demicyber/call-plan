@@ -174,7 +174,7 @@ Agent 正式生成 Call Plan
 
 Six stages: **Prospect → Qualified → Technical Validation → Business Validation → Committed → Closed/Launched**
 
-Full stage definitions and exit criteria: [references/meddpicc-stage-mapping.md](references/meddpicc-stage-mapping.md)
+Full stage definitions and exit criteria: [references/stage-mapping.md](references/stage-mapping.md)
 
 **How stage shapes each Call Plan:**
 
