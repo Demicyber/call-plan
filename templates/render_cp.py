@@ -25,6 +25,7 @@ DATA SCHEMA (what the agent produces):
             "name": "刘总",
             "title": "CTO",
             "stance": "Supporter",
+            "role_in_decision": "Decision Maker|Technical Evaluator|Influencer|End User",
             "focus_priorities": "...",
             "communication_approach": "...",
             "our_goal": "..."
@@ -58,7 +59,7 @@ DATA SCHEMA (what the agent produces):
     "objections": [
         {
             "objection": "...",
-            "category": "Technical",
+            "category": "Status Quo|Price/Value|Capability/Fit|Risk/Trust|Authority/Process",
             "response": "...",
             "fallback": "...",
             "is_disqualifier": false
@@ -67,9 +68,11 @@ DATA SCHEMA (what the agent produces):
     "agenda": [
         {"time": "14:00-14:10", "topic": "...", "owner": "...", "purpose": "..."}
     ],
-    "next_steps": [
-        {"step": "...", "owner": "...", "timeline": "..."}
-    ],
+    "next_steps": {
+        "primary": [{"step": "...", "owner": "...", "timeline": "...", "purpose": "..."}],
+        "fallback": [{"step": "...", "owner": "...", "timeline": "...", "purpose": "..."}],
+        "exit": [{"step": "...", "owner": "...", "timeline": "...", "purpose": "..."}]
+    },
     "last_updated": "2026-05-14"
 }
 """

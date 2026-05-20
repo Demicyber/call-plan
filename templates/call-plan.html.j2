@@ -94,10 +94,11 @@
         .pill-non-supporter { background: #FFCDD2; color: #B71C1C; }
         .pill-adversary { background: #FFCDD2; color: #B71C1C; }
         .pill-champion { background: #C8E6C9; color: #1B5E20; }
-        .pill-technical { background: #E8DEF8; color: #21005D; }
-        .pill-commercial { background: #FFD8E4; color: #930042; }
-        .pill-resource { background: #FFF9C4; color: #F57F17; }
-        .pill-political { background: #FFCDD2; color: #B71C1C; }
+        .pill-status-quo { background: #FFF9C4; color: #F57F17; }
+        .pill-price-value { background: #FFD8E4; color: #930042; }
+        .pill-capability-fit { background: #E8DEF8; color: #21005D; }
+        .pill-risk-trust { background: #FFCDD2; color: #B71C1C; }
+        .pill-authority-process { background: #D1C4E9; color: #311B92; }
         .pill-ideal { background: #C8E6C9; color: #1B5E20; }
         .pill-acceptable { background: #FFF9C4; color: #F57F17; }
         .pill-minimum { background: var(--md-sys-color-surface-container-highest); color: var(--md-sys-color-on-surface-variant); }
@@ -201,6 +202,9 @@
                                 <p class="body-medium">{{ person.title }}</p>
                             </div>
                             <span class="pill-badge pill-{{ person.stance|lower|replace(' ', '-')|replace('_', '-') }}">{{ person.stance }}</span>
+                            {% if person.role_in_decision %}
+                            <span class="pill-badge" style="background: var(--md-sys-color-tertiary-container); color: var(--md-sys-color-on-tertiary-container);">{{ person.role_in_decision }}</span>
+                            {% endif %}
                         </div>
                         <div class="space-y-2">
                             <div class="p-3 rounded-xl" style="background: var(--md-sys-color-surface-container);">
@@ -393,7 +397,7 @@
                 {% for obj in objections %}
                 <div class="p-5 rounded-2xl" style="background: var(--md-sys-color-surface-container); {% if obj.is_disqualifier %}border-left: 4px solid var(--md-sys-color-error);{% endif %}">
                     <div class="flex items-center gap-3 mb-3">
-                        <span class="pill-badge pill-{{ obj.category|lower }}">{{ obj.category }}</span>
+                        <span class="pill-badge pill-{{ obj.category|lower|replace('/', '-')|replace(' ', '-') }}">{{ obj.category }}</span>
                         {% if obj.is_disqualifier %}
                         <span class="pill-badge" style="background: var(--md-sys-color-error-container); color: var(--md-sys-color-error);">⚠️ Potential Disqualifier</span>
                         {% endif %}
@@ -448,27 +452,101 @@
                 <span class="material-symbols-outlined" style="color: var(--md-sys-color-primary);">arrow_forward</span>
                 Potential Next Steps
             </h2>
-            <div class="overflow-x-auto mt-4">
-                <table class="w-full text-left">
-                    <thead>
-                        <tr class="border-b" style="border-color: var(--md-sys-color-outline-variant);">
-                            <th class="label-large py-3 px-2">#</th>
-                            <th class="label-large py-3 px-2">Action</th>
-                            <th class="label-large py-3 px-2">Owner</th>
-                            <th class="label-large py-3 px-2">Timeline</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for step in next_steps %}
-                        <tr class="border-b" style="border-color: var(--md-sys-color-outline-variant);">
-                            <td class="body-medium py-3 px-2">{{ loop.index }}</td>
-                            <td class="body-medium py-3 px-2 font-medium" style="color: var(--md-sys-color-on-surface);">{{ step.step }}</td>
-                            <td class="body-medium py-3 px-2">{{ step.owner }}</td>
-                            <td class="body-medium py-3 px-2">{{ step.timeline }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+
+            <!-- Primary Path -->
+            <div class="mt-4">
+                <p class="title-medium mb-3 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base" style="color: var(--md-sys-color-success);">check_circle</span>
+                    If meeting goes well (primary path)
+                </p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b" style="border-color: var(--md-sys-color-outline-variant);">
+                                <th class="label-large py-3 px-2">#</th>
+                                <th class="label-large py-3 px-2">Proposed Next Step</th>
+                                <th class="label-large py-3 px-2">Timeline</th>
+                                <th class="label-large py-3 px-2">Owner</th>
+                                <th class="label-large py-3 px-2">Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for step in next_steps.primary %}
+                            <tr class="border-b" style="border-color: var(--md-sys-color-outline-variant);">
+                                <td class="body-medium py-3 px-2">{{ loop.index }}</td>
+                                <td class="body-medium py-3 px-2 font-medium" style="color: var(--md-sys-color-on-surface);">{{ step.step }}</td>
+                                <td class="body-medium py-3 px-2">{{ step.timeline }}</td>
+                                <td class="body-medium py-3 px-2">{{ step.owner }}</td>
+                                <td class="body-medium py-3 px-2">{{ step.purpose }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Fallback Path -->
+            <div class="mt-6">
+                <p class="title-medium mb-3 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base" style="color: var(--md-sys-color-warning);">schedule</span>
+                    If customer needs more time (fallback path)
+                </p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b" style="border-color: var(--md-sys-color-outline-variant);">
+                                <th class="label-large py-3 px-2">#</th>
+                                <th class="label-large py-3 px-2">Proposed Next Step</th>
+                                <th class="label-large py-3 px-2">Timeline</th>
+                                <th class="label-large py-3 px-2">Owner</th>
+                                <th class="label-large py-3 px-2">Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for step in next_steps.fallback %}
+                            <tr class="border-b" style="border-color: var(--md-sys-color-outline-variant);">
+                                <td class="body-medium py-3 px-2">{{ loop.index }}</td>
+                                <td class="body-medium py-3 px-2 font-medium" style="color: var(--md-sys-color-on-surface);">{{ step.step }}</td>
+                                <td class="body-medium py-3 px-2">{{ step.timeline }}</td>
+                                <td class="body-medium py-3 px-2">{{ step.owner }}</td>
+                                <td class="body-medium py-3 px-2">{{ step.purpose }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Graceful Exit -->
+            <div class="mt-6">
+                <p class="title-medium mb-3 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base" style="color: var(--md-sys-color-on-surface-variant);">door_open</span>
+                    If not a fit / timing wrong (graceful exit)
+                </p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b" style="border-color: var(--md-sys-color-outline-variant);">
+                                <th class="label-large py-3 px-2">#</th>
+                                <th class="label-large py-3 px-2">Proposed Next Step</th>
+                                <th class="label-large py-3 px-2">Timeline</th>
+                                <th class="label-large py-3 px-2">Owner</th>
+                                <th class="label-large py-3 px-2">Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for step in next_steps.exit %}
+                            <tr class="border-b" style="border-color: var(--md-sys-color-outline-variant);">
+                                <td class="body-medium py-3 px-2">{{ loop.index }}</td>
+                                <td class="body-medium py-3 px-2 font-medium" style="color: var(--md-sys-color-on-surface);">{{ step.step }}</td>
+                                <td class="body-medium py-3 px-2">{{ step.timeline }}</td>
+                                <td class="body-medium py-3 px-2">{{ step.owner }}</td>
+                                <td class="body-medium py-3 px-2">{{ step.purpose }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
