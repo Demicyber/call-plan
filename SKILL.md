@@ -3,7 +3,7 @@ name: call-plan
 description: >
   Generates Call Plan documents for AWS sales teams before external customer meetings.
   Uses a 7-section template shaped by the current sales stage and info gaps.
-  Works with Engagement Plan, Post-Meeting Report, Executive Briefing, Opportunity Progression, Contact Profiling, CXO Personas, and Writer skills
+  Works with Engagement Plan, Post-Meeting Report, Executive Briefing, Opportunity Progression, Contact Profiling, and CXO Personas
   as part of the Customer Engagement Planner.
   Triggers on: "call plan", "meeting prep", "customer visit", "visit preparation",
   "prep for my call", "help me prepare for tomorrow", "I have a meeting with",
@@ -56,13 +56,15 @@ Tag every Call Plan with the current AWS Sales Stage (sourced from EP / Opp Prog
 ### Rule 5: Always Review with Sales
 After generating, always ask: "Please review and let me know if anything needs to be revised."
 
-### Rule 6: Sync Back to EP
-After generating a Call Plan, compare attendees and objectives with EP's Next Milestone Detail. If there are differences:
+### Rule 6: Bidirectional Sync with EP
+**CP → EP（生成后）：** After generating a Call Plan, compare attendees and objectives with EP's Next Milestone Detail. If there are differences:
 1. **New attendees** → Add to EP Key Stakeholders; mark unknown fields as `[待确认]`
 2. **Attendee changes** → Update EP Next Milestone Detail
 3. **Objective changes** → Update the corresponding row in EP Engagement Roadmap
 4. Add `[Updated: YYYY-MM-DD]` timestamp next to every changed field
 5. Notify sales: "EP has been updated to reflect the Call Plan changes — please review."
+
+**EP → CP（销售修改后）：** 销售 review CP 后如果做了修改（如调整参会人、目标、议程），agent 主动检查 EP 对应字段是否需要同步更新。具体字段映射见 references/call-plan.md 中的 AGENT GUIDANCE。原则：CP 变了 → EP 跟着更新，保持一致性。
 
 ### Rule 7: Data Provenance Labeling
 Every piece of information must carry a provenance label so sales knows the confidence level.
@@ -149,6 +151,11 @@ Agent 正式生成 Call Plan
 2. **随时根据销售的问题调整** — 对话中发现新信息（比如竞争对手动态、客户内部变化），立即纳入 CP 的考量
 3. **Agent 的回答本身不是 CP** — 对话中提供的 research、建议、分析是帮助销售决策的，最终结构化输出才是 CP 文档
 4. **多轮对话是正常的** — 不要急于生成，确保关键共识达成
+5. **对话收敛判断** — 满足以下任一条件即可进入生成：
+   - 必确认项（下方列表）全部确认
+   - 销售明确说"够了/先出一版/可以了"
+   - 连续 1 轮 agent 提问后销售没有新增实质信息
+   - Agent 已问满 2 轮（每轮 max 3 个问题），仍有缺失 → 先生成初版，缺失项标 `[待确认]`
 
 **必确认项（Agent 不应假设的）：**
 - 会议日期/时间/形式（线上/线下）
@@ -190,6 +197,12 @@ For every Call Plan, prepare **industry-relevant use cases** and **customer refe
 ---
 
 ## 7. Call Plan Template
+
+⚠️ **SKILL.md vs references/call-plan.md 的职责边界：**
+- **SKILL.md**（本文件）= 规则、流程、依赖关系、调用逻辑 — agent 的行为指令
+- **references/call-plan.md** = 模板结构、写作标准、方法论指导 — 生成内容时的格式和质量标准。其中 `<!-- AGENT GUIDANCE -->` 注释块是对模板各 section 的生成方法补充说明。
+
+Agent 生成 CP 时先读 SKILL.md 确认流程和规则，再读 references 获取模板结构和写作指导。两者不重复定义同一件事。
 
 Read [references/call-plan.md](references/call-plan.md) before generating. The template has 7 sections:
 
