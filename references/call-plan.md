@@ -1,5 +1,16 @@
 # Call Plan — Template
 
+<!-- TOC (Agent Navigation) -->
+<!-- 1. Meeting Details — line 56 -->
+<!-- 2. Target Meeting Outcomes — line 148 -->
+<!-- 3. Success Criteria — line 208 -->
+<!-- 4. Information Exchange — line 273 -->
+<!-- 5. Potential Objections & Responses — line 372 -->
+<!-- 6. Meeting Agenda — line 446 -->
+<!-- 7. Potential Next Steps — line 510 -->
+<!-- GLOBAL AGENT LOGIC — line 32 -->
+<!-- END TOC -->
+
 > **Purpose:** Prepares AWS sales team members before external customer meetings. AI agent generates the Call Plan based on sales input, Engagement Plan context, and the current sales stage.
 >
 > ✅ *After generating, agent always asks sales to review and revise as needed.*
