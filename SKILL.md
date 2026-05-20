@@ -5,13 +5,13 @@ description: >
   Uses a 7-section template shaped by the current sales stage and info gaps.
   Works with Engagement Plan, Post-Meeting Report, Executive Briefing, Opportunity Progression, Contact Profiling, CXO Personas,
   Account Context, Market Intelligence, and Competitive Intelligence as part of the Customer Engagement Planner.
-  Triggers on: "call plan", "meeting prep", "customer visit", "visit preparation",
-  "prep for my call", "help me prepare for tomorrow", "I have a meeting with",
-  "拜访准备", "客户拜访".
-  Also trigger when: EP Roadmap next milestone is approaching, sales asks "明天见客户聊什么",
-  "怎么跟这个 CTO 聊", "帮我想想怎么开场", sales shares a meeting invite or calendar event,
-  sales mentions an upcoming customer meeting without explicitly saying "call plan",
-  or any scenario where an AWS sales rep is preparing for a specific external customer interaction.
+  Invoke this skill when the user says "call plan", "meeting prep", "customer visit", "visit preparation",
+  "prep for my call", "help me prepare for tomorrow", "I have a meeting with", "拜访准备", "客户拜访",
+  "明天见客户聊什么", "怎么跟这个 CTO 聊", "帮我想想怎么开场", or any variation implying preparation
+  for an upcoming customer interaction. Also invoke when an EP Roadmap next milestone is approaching,
+  sales shares a meeting invite or calendar event, sales mentions an upcoming customer meeting without
+  explicitly requesting a call plan, or any scenario where an AWS sales rep needs structured preparation
+  for a specific external customer interaction.
 ---
 
 # Call Plan Skill
@@ -61,30 +61,31 @@ Tag every Call Plan with the current AWS Sales Stage (sourced from EP / Opp Prog
 After generating, always ask: "Please review and let me know if anything needs to be revised."
 
 ### Rule 6: Bidirectional Sync with EP
-**CP → EP（生成后）：** After generating a Call Plan, compare attendees and objectives with EP's Next Milestone Detail. If there are differences:
-1. **New attendees** → Add to EP Key Stakeholders; mark unknown fields as `[待确认]`
+**CP → EP (post-generation):** After generating a Call Plan, compare attendees and objectives with EP's Next Milestone Detail. If there are differences:
+1. **New attendees** → Add to EP Key Stakeholders; mark unknown fields as `[TBC]`
 2. **Attendee changes** → Update EP Next Milestone Detail
 3. **Objective changes** → Update the corresponding row in EP Engagement Roadmap
 4. Add `[Updated: YYYY-MM-DD]` timestamp next to every changed field
 5. Notify sales: "EP has been updated to reflect the Call Plan changes — please review."
 
-**EP → CP（销售修改后）：** 销售 review CP 后如果做了修改（如调整参会人、目标、议程），agent 主动检查 EP 对应字段是否需要同步更新。具体字段映射见 references/call-plan.md 中的 AGENT GUIDANCE。原则：CP 变了 → EP 跟着更新，保持一致性。
+**EP → CP (post-sales-review):** When sales reviews the CP and makes changes (e.g., adjusting attendees, objectives, or agenda), the agent proactively checks whether corresponding EP fields need sync updates. See references/call-plan.md AGENT GUIDANCE for field mapping. Principle: if CP changes → EP follows, maintaining consistency.
 
 ### Rule 7: Data Provenance Labeling
 Every piece of information must carry a provenance label so sales knows the confidence level.
 
 | Label | Meaning | Sales Action |
 |-------|---------|--------------|
-| `[销售确认]` | 销售直接提供或明确确认的信息 | 可直接使用 |
-| `[AI推断]` | Agent 根据上下文分析推断的信息 | 建议核实 |
-| `[网络搜索]` | 通过网络搜索获取的公开信息 | 注意时效 |
+| `[销售确认]` | Information directly provided or explicitly confirmed by sales | Use directly |
+| `[AI推断]` | Information inferred by agent from context analysis | Recommend verification |
+| `[网络搜索]` | Publicly available information obtained via web search | Check timeliness |
 
-**标注粒度：** 每条独立可判断真伪的断言。
-**显示规则：** 只显式标出 `[销售确认]` 和 `[网络搜索]`，无标注 = `[AI推断]`（默认）。
-**升级机制：** 销售确认后 → 升级为 `[销售确认]`。
+**Labeling granularity:** Each independently verifiable assertion.
+**Display rules:** Only explicitly label `[销售确认]` and `[网络搜索]`; no label = `[AI推断]` (default).
+**Upgrade mechanism:** After sales confirms → upgrade to `[销售确认]`.
+**Language rule:** Labels follow the conversation language — use Chinese labels when conversing in Chinese, English labels (`[Sales Confirmed]`/`[AI Inferred]`/`[Web Search]`) when conversing in English.
 
 ### Rule 8: Never Hallucinate
-Do not fabricate meeting objectives, attendee roles, customer stance, or expected outcomes. If information is unknown, mark as `[待确认]` and ask sales to provide it.
+Do not fabricate meeting objectives, attendee roles, customer stance, or expected outcomes. If information is unknown, mark as `[TBC]` and ask sales to provide it.
 
 ---
 
@@ -125,53 +126,53 @@ Then:
 
 Call Plan generation is **NOT** a one-shot output. It follows a conversational preparation phase where agent and sales collaborate to confirm inputs, clarify unknowns, and answer each other's questions.
 
-**流程：**
+**Flow:**
 
 ```
 EP Next Milestone confirmed / Sales requests CP
     ↓
 Agent surfaces known context (from EP) + identifies gaps
     ↓
-【Pre-Generation Dialogue 对话确认阶段】
-    ├── Agent 展示已知：参会人、目标、stage context
-    ├── Agent 提出待确认项：日期？最终参会人？上次遗留问题进展？
-    ├── Sales 可能反问 → Agent 作为信息提供者回应
-    │   （竞争情报、沟通风格建议、类似案例、行业趋势...）
-    ├── Sales 补充/修正 → Agent 实时调整理解
-    └── 关键输入确认后
+【Pre-Generation Dialogue】
+    ├── Agent presents what's known: attendees, objectives, stage context
+    ├── Agent raises items to confirm: date? final attendees? progress on previous follow-ups?
+    ├── Sales may ask questions → Agent responds as information provider
+    │   (competitive intel, communication style advice, similar cases, industry trends...)
+    ├── Sales supplements/corrects → Agent adjusts understanding in real-time
+    └── Key inputs confirmed
     ↓
-Agent 正式生成 Call Plan
+Agent generates Call Plan
 ```
 
-**Agent 在对话中的双重角色：**
+**Agent's dual role during dialogue:**
 
-| 角色 | 说明 | 示例 |
-|------|------|------|
-| **信息收集者** | 确认生成 CP 所需的关键输入 | "这次会议具体什么时候？客户方最终谁来？" |
-| **信息提供者** | 回应销售的问题，提供决策支持信息 | "根据 CXO Persona，这位 CTO 偏好数据驱动的讨论方式..." |
+| Role | Description | Example |
+|------|-------------|---------|
+| **Information Collector** | Confirm key inputs needed to generate the CP | "When exactly is this meeting? Who's the final attendee list from customer side?" |
+| **Information Provider** | Answer sales questions, provide decision-support information | "Based on CXO Persona, this CTO prefers data-driven discussions..." |
 
-**关键原则：**
+**Key principles:**
 
-1. **不要死等所有信息才生成** — 如果关键信息（参会人、目标）已确认，其余 gaps 可以在 CP 中标 `[待确认]` 后先出初版
-2. **随时根据销售的问题调整** — 对话中发现新信息（比如竞争对手动态、客户内部变化），立即纳入 CP 的考量
-3. **Agent 的回答本身不是 CP** — 对话中提供的 research、建议、分析是帮助销售决策的，最终结构化输出才是 CP 文档
-4. **多轮对话是正常的** — 不要急于生成，确保关键共识达成
-5. **对话收敛判断** — 满足以下任一条件即可进入生成：
-   - 必确认项（下方列表）全部确认
-   - 销售明确说"够了/先出一版/可以了"
-   - 连续 1 轮 agent 提问后销售没有新增实质信息
-   - Agent 已问满 2 轮（每轮 max 3 个问题），仍有缺失 → 先生成初版，缺失项标 `[待确认]`
+1. **Don't wait for all information before generating** — If key inputs (attendees, objectives) are confirmed, remaining gaps can be marked `[TBC]` in the initial draft
+2. **Adjust based on sales questions at any time** — If new information surfaces during dialogue (competitor moves, internal customer changes), incorporate into CP considerations immediately
+3. **Agent's answers are not the CP** — Research, advice, and analysis provided during dialogue help sales make decisions; the final structured output is the CP document
+4. **Multiple dialogue rounds are normal** — Don't rush to generate; ensure key consensus is reached
+5. **Dialogue convergence criteria** — Enter generation when any of:
+   - All must-confirm items (list below) are confirmed
+   - Sales explicitly says "enough / give me a first draft / good to go"
+   - Agent asks one round with no substantive new info from sales
+   - Agent has asked 2 rounds (max 3 questions each) with gaps remaining → generate initial draft, mark gaps as `[TBC]`
 
-**必确认项（Agent 不应假设的）：**
-- 会议日期/时间/形式（线上/线下）
-- 最终参会人名单（客户方 + AWS 方）
-- 本次会议的核心目标（sales 自己想要达成什么）
+**Must-confirm items (Agent should not assume):**
+- Meeting date / time / format (online / in-person)
+- Final attendee list (customer side + AWS side)
+- Core meeting objective (what sales wants to achieve)
 
-**可推断项（Agent 可以先填、让 sales 确认的）：**
-- 会议目标的 customer perspective（基于 EP context）
-- 沟通策略（基于 Contact Profiling + CXO Persona）
-- 潜在异议（基于 stage + 竞争态势 + 历史）
-- 建议议程分配
+**Can-infer items (Agent fills first, sales confirms):**
+- Meeting objectives from customer perspective (based on EP context)
+- Communication strategy (based on Contact Profiling + CXO Persona)
+- Potential objections (based on stage + competitive landscape + history)
+- Suggested agenda allocation
 
 ---
 
@@ -203,11 +204,11 @@ For every Call Plan, prepare **industry-relevant use cases** and **customer refe
 
 ## 7. Call Plan Template
 
-⚠️ **SKILL.md vs references/call-plan.md 的职责边界：**
-- **SKILL.md**（本文件）= 规则、流程、依赖关系、调用逻辑 — agent 的行为指令
-- **references/call-plan.md** = 模板结构、写作标准、方法论指导 — 生成内容时的格式和质量标准。其中 `<!-- AGENT GUIDANCE -->` 注释块是对模板各 section 的生成方法补充说明。
+⚠️ **Responsibility boundary between SKILL.md and references/call-plan.md:**
+- **SKILL.md** (this file) = rules, workflows, dependencies, invocation logic — behavioral instructions for the agent
+- **references/call-plan.md** = template structure, writing standards, methodology guidance — format and quality standards for generated content. The `<!-- AGENT GUIDANCE -->` comment blocks provide supplementary generation guidance for each template section.
 
-Agent 生成 CP 时先读 SKILL.md 确认流程和规则，再读 references 获取模板结构和写作指导。两者不重复定义同一件事。
+Agent reads SKILL.md first for workflow and rules, then reads references for template structure and writing guidance. The two files do not duplicate the same definitions.
 
 Read [references/call-plan.md](references/call-plan.md) before generating. The template has 7 sections:
 
@@ -253,10 +254,10 @@ Before delivering, validate:
 ## 10. Information Insufficient Fallback
 
 1. **Never block.** Generate best-effort version with available information.
-2. **Never hallucinate.** Mark gaps as `[待确认]` with actionable context — explain **why** it matters and **how** it would improve the document.
-   - ❌ `[待确认] — 请补充竞争对手信息`
-   - ✅ `[待确认] — 目前缺少竞争对手信息。如果能提供当前在用的供应商和合同到期时间，我可以做竞争分析和差异化策略。`
-3. **Max 3 questions at once.** Prioritize top 3, note rest can be filled later.
+2. **Never hallucinate.** Mark gaps as `[TBC]` with actionable context — explain **why** it matters and **how** it would improve the document.
+   - ❌ `[TBC] — please provide competitor info`
+   - ✅ `[TBC] — Missing competitor info. If you can share the current vendor and contract expiry, I can produce a competitive analysis and differentiation strategy.`
+3. **Max 3 questions at once.** Prioritize top 3; note the rest can be filled later.
 4. **Guide with examples.** Provide ❌/✅ contrast when sales input is too vague.
 
 ---
@@ -301,16 +302,16 @@ Sales requests these explicitly; agent does not auto-generate.
 
 Example: `CP_MinghuaHeavy_2026-05-15_Discovery-CTO.html`
 
-MilestoneBrief = EP Roadmap milestone 描述精简版（2-4个英文单词，kebab-case）。CP 和对应 PMR 使用相同的 `{Date}_{MilestoneBrief}` 后缀，方便配对。
+MilestoneBrief = condensed version of the EP Roadmap milestone description (2-4 English words, kebab-case). CP and its corresponding PMR use the same `{Date}_{MilestoneBrief}` suffix for easy pairing.
 
 ### Storage Architecture
 
-**首次配置：** Agent 首次与销售互动时，询问本地存储路径：
-> "请告诉我你希望文件存放的本地路径（如 ~/Documents/AWS-Sales/）"
+**First-time setup:** On first interaction with a sales rep, ask for local storage path:
+> "Please tell me your preferred local file path (e.g., ~/Documents/AWS-Sales/)"
 
-**约束：文件存储在销售本地设备，不存放在 Feishu Doc 或其他云文档平台。**
+**Constraint: Files are stored on the sales rep's local device, NOT on Feishu Doc or other cloud document platforms.**
 
-**目录结构（以 Customer → Opportunity 为核心）：**
+**Directory structure (organized by Customer → Opportunity):**
 
 ```
 {sales_local_path}/
@@ -320,18 +321,18 @@ MilestoneBrief = EP Roadmap milestone 描述精简版（2-4个英文单词，keb
 │   │   ├── CP_{Customer}_{Date}_{MilestoneBrief}.html   ← Call Plan
 │   │   ├── PMR_{Customer}_{Date}_{MilestoneBrief}.html
 │   │   └── ...
-│   └── _account/              ← 客户级共享资料（跨 Opp）
+│   └── _account/              ← Account-level shared materials (cross-Opp)
 │       ├── org-chart.md
 │       └── contacts/
 ```
 
-**关键规则：**
-- Call Plan 存放在对应 Opportunity 文件夹下（跟 EP 同级）
-- 每次会议产生一个新 CP 文件（不是 living document）
-- Agent 通过 EP → Roadmap → Next Milestone 定位当前 Opp
-- 多 Opp 定位：1个 active opp → 自动关联；多个 → 问销售确认
+**Key rules:**
+- Call Plan is stored in the corresponding Opportunity folder (same level as EP)
+- Each meeting produces a new CP file (not a living document)
+- Agent locates current Opp via EP → Roadmap → Next Milestone
+- Multi-Opp routing: 1 active opp → auto-associate; multiple → ask sales to confirm
 
-详细目录结构规范见 engagement-plan SKILL.md（主定义文档）。
+See engagement-plan SKILL.md for the canonical directory structure specification.
 
 ---
 
