@@ -84,4 +84,4 @@ Use this mapping to:
 
 ---
 
-*Version: 2.0 | Last updated: 2026-04-17 | Part of the Customer Engagement Closed-Loop Flow*
+*Version: 2.1 | Last updated: 2026-05-20 | Part of the Customer Engagement Closed-Loop Flow*

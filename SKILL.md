@@ -3,8 +3,8 @@ name: call-plan
 description: >
   Generates Call Plan documents for AWS sales teams before external customer meetings.
   Uses a 7-section template shaped by the current sales stage and info gaps.
-  Works with Engagement Plan, Post-Meeting Report, Executive Briefing, Opportunity Progression, Contact Profiling, and CXO Personas
-  as part of the Customer Engagement Planner.
+  Works with Engagement Plan, Post-Meeting Report, Executive Briefing, Opportunity Progression, Contact Profiling, CXO Personas,
+  Account Context, Market Intelligence, and Competitive Intelligence as part of the Customer Engagement Planner.
   Triggers on: "call plan", "meeting prep", "customer visit", "visit preparation",
   "prep for my call", "help me prepare for tomorrow", "I have a meeting with",
   "拜访准备", "客户拜访".
@@ -113,8 +113,9 @@ When no EP exists or sales requests directly, collect minimum required inputs:
 
 Then:
 1. Confirm the **current sales stage** through interactive dialogue
-2. Infer what you can from context, research publicly available information
-3. Generate the Call Plan, marking gaps as `[待确认]`
+2. Invoke **Account Context**, **Market Intelligence**, and **Competitive Intelligence** directly (Path B fallback — see Section 8)
+3. Infer what you can from context, research publicly available information
+4. Generate the Call Plan, marking gaps as `[待确认]`
 
 > After generating via Path B, always check if an EP exists. If not, auto-create one (Rule 1).
 
