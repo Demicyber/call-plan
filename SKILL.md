@@ -228,6 +228,9 @@ Read [references/call-plan.md](references/call-plan.md) before generating. The t
 | **CXO Personas** | For exec attendees: role-level priorities, pain points, KPIs, objections (the **what** layer). Context-aware — select dimensions relevant to this meeting + stage. | Load from `cxo-personas/personas/` using INDEX.md Title Mapping. | General executive priorities based on role. Mark `[待确认]`. |
 | **Contact Profiling** | For every attendee: behavioral profile — communication style, decision patterns, motivators (the **how** layer). | Load if exists; otherwise build through dialogue with sales. | Use sales rep's input. Mark `[待确认]`. |
 | **Opportunity Progression** | Single source of truth for sales stage + exit criteria. Informs sections 2, 4, 5, 7. CP can suggest advancement but does NOT validate it. | Load opp record if it exists. | Confirm stage interactively with sales rep. |
+| **Account Context** | Customer background, org chart, strategic priorities. Path A: obtained via EP Opp Snapshot. Path B (no EP): invoke directly for customer context to inform Section 1 (Attendee Insights) and Section 4 (tailored questions). | EP优先; Path B fallback → invoke account-context skill directly. | Web research + sales input. Mark `[待确认]`. |
+| **Market Intelligence** | Industry trends, customer news, regulatory changes. Path A: obtained via EP context. Path B (no EP): invoke directly to populate Section 4 Information to Deliver (Market Context type). | EP优先; Path B fallback → invoke market-intelligence skill directly. | Web research for public info. Mark `[网络搜索]`. |
+| **Competitive Intelligence** | Battlecard data, competitor positioning. Path A: obtained via EP Win Strategy. Path B (no EP): invoke directly to inform Section 5 (Price/Competition objections) and Section 4 (competitive context questions). | EP优先; Path B fallback → invoke competitive-intelligence skill directly. | General competitive awareness from web research. Mark `[待确认]`. |
 | **Post-Meeting Report** | CP's Target Meeting Outcomes (Section 2) are auto-pulled into PMR's Outcome Assessment. CP's Next Steps are compared with actual outcomes in PMR. | N/A — PMR reads from CP. | N/A. |
 | **Executive Briefing** | If meeting is an EBC or internal executive briefing, generate EB instead of Call Plan. | Check meeting type with sales rep. | N/A. |
 
@@ -331,4 +334,4 @@ MilestoneBrief = EP Roadmap milestone 描述精简版（2-4个英文单词，keb
 
 ---
 
-*Call Plan Skill | Version: 3.3*
+*Call Plan Skill | Version: 3.4*
