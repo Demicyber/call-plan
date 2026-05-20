@@ -20,32 +20,7 @@
 
 <!-- GLOBAL AGENT LOGIC:
 
-## 定位
-Call Plan 是 EP Next Milestone 的执行细化。一个 EP（一个商机）下面有多个 Call Plan（每次会议一个）。
-
-关系链：EP Next Milestone (方向/目标) → Call Plan (具体怎么聊) → PMR (会后复盘 → 回写 EP)
-
-- EP Next Milestone = 战略层："下一步做什么、跟谁、达成什么"
-- Call Plan = 执行层："具体怎么聊、问什么、怎么应对、时间怎么分"（比 EP 更 detail）
-- PMR = 反馈层："结果怎样、发现了什么、EP 怎么调整"
-
-## 数据源
-| 来源 | 说明 |
-|---|---|
-| EP 自动拉取 | Opportunity name, stage, attendees (from Key Stakeholders), target outcome (from Next Milestone), competitive context, stakeholder stance |
-| 销售补充 | 会议时间/地点、本次具体想聊什么、已知 objection、agenda 偏好、新发现的信息 |
-| Agent 生成 | 基于以上两者 + CXO Personas + Contact Profiling + stage-mapping 自动生成各 section 初稿 |
-
-## 生成流程
-1. 触发：销售请求生成 Call Plan，或 EP Next Milestone 到期提醒
-2. Agent 从 EP 拉取框架信息，向销售确认/补充本次会议特有的细节
-3. Agent 检查上一份 PMR：unresolved gaps (Information Gap Check ❌) 自动带入 Section 4，未完成 action items 自动带入讨论
-4. Agent 生成 Call Plan 全文初稿
-5. 销售 review → confirm 或修改
-6. Agent 检查修改项 → 触发双向同步（见下）
-
-## 双向同步规则（关键！）
-Call Plan 不是单向"EP 往下灌"。销售在 Call Plan 里修改的任何内容，agent 必须主动检查 EP 对应字段是否需要同步更新：
+## 双向同步字段映射（Rule 6 详细版）
 
 | Call Plan 变更 | 检查 EP 哪里 |
 |---|---|
@@ -56,7 +31,7 @@ Call Plan 不是单向"EP 往下灌"。销售在 Call Plan 里修改的任何内
 | 发现新 stakeholder | → EP Key Stakeholders（新增） |
 | 改了 success criteria | → EP Next Milestone exit criteria |
 
-Agent 行为：变更检测后，向销售提示 "EP 这几个地方也需要同步更新，确认吗？" — 销售确认后执行更新。绝对不能只改一个地方忘记另一个地方。
+Agent 行为：变更检测后，向销售提示 "EP 这几个地方也需要同步更新，确认吗？" — 销售确认后执行更新。
 
 ## PMR 接口
 以下字段会被 PMR 拉取做会后对比评估：

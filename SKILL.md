@@ -8,6 +8,10 @@ description: >
   Triggers on: "call plan", "meeting prep", "customer visit", "visit preparation",
   "prep for my call", "help me prepare for tomorrow", "I have a meeting with",
   "拜访准备", "客户拜访".
+  Also trigger when: EP Roadmap next milestone is approaching, sales asks "明天见客户聊什么",
+  "怎么跟这个 CTO 聊", "帮我想想怎么开场", sales shares a meeting invite or calendar event,
+  sales mentions an upcoming customer meeting without explicitly saying "call plan",
+  or any scenario where an AWS sales rep is preparing for a specific external customer interaction.
 ---
 
 # Call Plan Skill
@@ -327,4 +331,4 @@ MilestoneBrief = EP Roadmap milestone 描述精简版（2-4个英文单词，keb
 
 ---
 
-*Call Plan Skill | Version: 3.2*
+*Call Plan Skill | Version: 3.3*

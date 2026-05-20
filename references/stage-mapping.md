@@ -1,6 +1,6 @@
-# MEDDPICC × AWS Sales Stage Mapping
+# AWS Sales Stage Mapping
 
-> Reference: GCR Field Enablement — AWS Sales Stage Advancement Standards mapped to MEDDPICC elements and sales activities.
+> Reference: GCR Field Enablement — AWS Sales Stage Advancement Standards. Each stage defines exit criteria, key qualification elements (MEDDPICC-derived), sales activities, and common pitfalls.
 >
 > This is the **single source of truth** for stage definitions.
 
@@ -75,7 +75,7 @@
 ## Usage
 
 Use this mapping to:
-1. **Focus Call Plan discovery questions** on the MEDDPICC elements most critical for the current stage advancement
+1. **Focus Call Plan discovery questions** on the qualification elements most critical for the current stage advancement
 2. **Align Target Outcomes** with the stage exit criteria — what must be true to advance?
 3. **Guide sales activities** — what should the rep be doing at this stage?
 4. **Identify gaps** blocking stage progression
